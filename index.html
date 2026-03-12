@@ -1,173 +1,1230 @@
-<div class="pc-result">€80K+ exposure<br><span>estimated before impact</span></div>
-    </div>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navneet Kaur — Data Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <div class="fun-strip reveal">
-    <p class="fun-label">Side Quests & Experiments</p>
-    <div class="fun-items">
-      <div class="fun-item"><span>📉</span> Automated Stock Tracker</div>
-      <div class="fun-item"><span>🤖</span> AI-Powered Cover Letter Bot</div>
-      <div class="fun-item"><span>📦</span> Last-Mile Route Optimizer</div>
-      <div class="fun-item"><span>⚡</span> Real-time News Sentiment Scraper</div>
+  :root {
+    --hot-pink: #FF2D78;
+    --electric-lime: #BAFF29;
+    --sky: #00D4FF;
+    --violet: #9B5DE5;
+    --orange: #FF6B35;
+    --bg: #0A0A0F;
+    --card-bg: #12121A;
+    --text: #F0EEF8;
+    --muted: #6B6880;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CURSOR */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--electric-lime);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: exclusion;
+  }
+  .cursor-trail {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 2px solid var(--hot-pink);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    mix-blend-mode: exclusion;
+  }
+
+  /* NOISE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  /* SPACE CANVAS — full bg */
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 15, 0.6);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(186, 255, 41, 0.1);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    color: var(--electric-lime);
+  }
+  .nav-logo span { color: var(--hot-pink); }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--electric-lime); }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    padding: 8rem 3rem 4rem;
+  }
+
+  /* HERO */
+  #hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 10rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(186, 255, 41, 0.1);
+    border: 1px solid rgba(186, 255, 41, 0.3);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    color: var(--electric-lime);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    width: fit-content;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--electric-lime);
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero-title .line1 { display: block; color: var(--text); }
+  .hero-title .line2 {
+    display: block;
+    -webkit-text-stroke: 2px var(--hot-pink);
+    color: transparent;
+  }
+  .hero-title .line3 { display: block; color: var(--electric-lime); }
+
+  .hero-sub {
+    max-width: 520px;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--electric-lime);
+    color: var(--bg);
+    padding: 0.9rem 2rem;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(186, 255, 41, 0.35);
+  }
+  .btn-outline {
+    border: 1px solid rgba(240, 238, 248, 0.2);
+    color: var(--text);
+    padding: 0.9rem 2rem;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--sky); color: var(--sky); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 3rem; left: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: var(--muted);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    left: -100%; width: 100%; height: 100%;
+    background: var(--electric-lime);
+    animation: scrollLine 2s infinite;
+  }
+  @keyframes scrollLine { to { left: 100%; } }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* MARQUEE */
+  .marquee-bar {
+    position: relative; z-index: 2;
+    background: var(--hot-pink);
+    padding: 0.75rem 0;
+    overflow: hidden;
+    display: flex;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: var(--bg);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .marquee-dot { color: rgba(10,10,15,0.5); }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* STATS */
+  .stats-bar {
+    position: relative; z-index: 2;
+    background: var(--card-bg);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem 3rem;
+    display: flex;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; gap: 0.25rem; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--electric-lime);
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ══════════════════════════════════════
+     SPATIAL GALLERY SECTION
+  ══════════════════════════════════════ */
+  #projects {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    padding: 6rem 0 0;
+    overflow: hidden;
+  }
+
+  .projects-header {
+    padding: 0 3rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-label::before {
+    content: '';
+    width: 32px; height: 2px;
+    background: var(--hot-pink);
+  }
+  .section-label span {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hot-pink);
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    max-width: 480px;
+  }
+
+  /* GALLERY WORLD */
+  #gallery-world {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    min-height: 520px;
+  }
+
+  #gallery-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* HUD overlays on gallery */
+  .gallery-hud {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .gallery-nav {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    pointer-events: all;
+  }
+
+  .gallery-dots {
+    display: flex;
+    gap: 10px;
+  }
+
+  .gdot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(186,255,41,0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .gdot.active {
+    background: var(--electric-lime);
+    border-color: var(--electric-lime);
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(186,255,41,0.6);
+  }
+
+  .gallery-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hint-arrow {
+    display: inline-block;
+    color: rgba(186,255,41,0.5);
+    animation: hintPulse 1.8s infinite;
+  }
+  .hint-arrow:last-child { animation-delay: 0.3s; }
+  @keyframes hintPulse {
+    0%,100% { opacity: 0.3; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(-4px); }
+  }
+
+  .gallery-screen-info {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    text-align: right;
+    pointer-events: none;
+  }
+  .gsi-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    color: rgba(186,255,41,0.7);
+    letter-spacing: 0.1em;
+  }
+  .gsi-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 2px;
+    letter-spacing: 0.06em;
+  }
+
+  .gallery-click-hint {
+    position: absolute;
+    top: 24px;
+    left: 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: rgba(255,45,120,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  /* SKILLS */
+  #skills {
+    position: relative; z-index: 2;
+    padding: 6rem 3rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .skills-inner { max-width: 1200px; margin: 0 auto; }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .skill-item {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .skill-item:hover {
+    border-color: rgba(0,212,255,0.4);
+    transform: translateY(-4px);
+  }
+  .skill-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--sky);
+  }
+  .skill-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--sky), var(--violet));
+    transition: width 1s ease;
+  }
+
+  /* CONTACT */
+  #contact {
+    position: relative; z-index: 2;
+    padding: 6rem 3rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .contact-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .contact-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+  .contact-title em { font-style: normal; color: var(--hot-pink); }
+  .contact-sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.3s, transform 0.2s;
+    font-size: 0.82rem;
+  }
+  .contact-link:hover {
+    border-color: rgba(186,255,41,0.4);
+    transform: translateX(6px);
+  }
+  .contact-link-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: rgba(186,255,41,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .availability-badge {
+    background: rgba(186,255,41,0.08);
+    border: 1px solid rgba(186,255,41,0.25);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    text-align: center;
+    width: 100%;
+  }
+  .avail-dot {
+    width: 10px; height: 10px;
+    background: var(--electric-lime);
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    box-shadow: 0 0 12px var(--electric-lime);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 6px var(--electric-lime); }
+    50% { box-shadow: 0 0 20px var(--electric-lime), 0 0 40px rgba(186,255,41,0.3); }
+  }
+  .avail-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--electric-lime);
+    margin-bottom: 0.5rem;
+  }
+  .avail-sub { font-size: 0.75rem; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 2;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  footer p { font-size: 0.7rem; color: var(--muted); }
+  footer span { color: var(--hot-pink); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 6rem 1.5rem 3rem; }
+    .hero-title { font-size: 3rem; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .stats-bar { padding: 1.5rem; gap: 2rem; }
+    footer { padding: 1.5rem; }
+    #gallery-world { height: 60vh; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- FULL PAGE SPACE BACKGROUND -->
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <div class="nav-logo">NK<span>.</span></div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">Available for work</div>
+  <h1 class="hero-title">
+    <span class="line1">Navneet</span>
+    <span class="line2">Kaur</span>
+    <span class="line3">Data Analyst</span>
+  </h1>
+  <p class="hero-sub">
+    I turn messy operational data into automated systems that actually work.
+    Python · SQL · Looker Studio — building tools that save hours, not seconds.
+  </p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-primary">See My Work ↓</a>
+    <a href="https://www.linkedin.com/in/navneet-kaur-analyst/" target="_blank" class="btn-outline">LinkedIn →</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Python</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">SQL & SQLite</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Data Analysis</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Automation</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Google Sheets API</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Looker Studio</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Supply Chain Analytics</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">GitHub Actions</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Python</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">SQL & SQLite</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Data Analysis</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Automation</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Google Sheets API</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Looker Studio</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Supply Chain Analytics</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">GitHub Actions</span><span class="marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-num">£340k+</span>
+    <span class="stat-label">Overstock Reduced</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">3s</span>
+    <span class="stat-label">vs Days Manually</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">£25.2M</span>
+    <span class="stat-label">Exposure Tracked</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">3</span>
+    <span class="stat-label">Live Projects</span>
+  </div>
+</div>
+
+<!-- ══ PROJECTS — SPATIAL GALLERY ══ -->
+<section id="projects">
+  <div class="projects-header">
+    <div class="section-label"><span>Selected Work</span></div>
+    <h2 class="section-title">Projects That<br>Ship Real Value</h2>
+    <p class="section-desc">Not tutorials. Not toy datasets. Real operational problems, solved with code that runs in production.</p>
+  </div>
+
+  <div id="gallery-world">
+    <canvas id="gallery-canvas"></canvas>
+
+    <div class="gallery-hud">
+      <div class="gallery-click-hint">↗ Click screen to open project</div>
+      <div class="gallery-screen-info">
+        <div class="gsi-num" id="gsi-num">01 / 03</div>
+        <div class="gsi-label" id="gsi-label">Supply Chain Early Warning</div>
+      </div>
+      <div class="gallery-nav">
+        <div class="gallery-hint">
+          <span class="hint-arrow">←</span>
+          drag or swipe to explore
+          <span class="hint-arrow" style="animation-direction:reverse">→</span>
+        </div>
+        <div class="gallery-dots" id="gallery-dots"></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section-skills" id="skills">
-  <p class="sec-label reveal">Tech Stack</p>
-  <h2 class="sec-headline reveal">Tools of the<br><em>Trade.</em></h2>
-  
-  <div class="skills-grid reveal">
-    <div class="skill-item">
-      <div class="skill-icon">🐍</div>
-      <div class="skill-name">Python</div>
-      <div class="skill-level">Automation & ETL</div>
-    </div>
-    <div class="skill-item">
-      <div class="skill-icon">🗄️</div>
-      <div class="skill-name">SQL</div>
-      <div class="skill-level">Postgres / SQLite / BigQuery</div>
-    </div>
-    <div class="skill-item">
-      <div class="skill-icon">📊</div>
-      <div class="skill-name">Data Viz</div>
-      <div class="skill-level">Power BI / Looker Studio</div>
-    </div>
-    <div class="skill-item">
-      <div class="skill-icon">☁️</div>
-      <div class="skill-name">Cloud Automation</div>
-      <div class="skill-level">GitHub Actions / Google Cloud</div>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="skills-inner">
+    <div class="section-label"><span>Toolkit</span></div>
+    <h2 class="section-title">Skills & Tools</h2>
+    <div class="skills-grid">
+      <div class="skill-item"><div class="skill-name">Python</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+      <div class="skill-item"><div class="skill-name">SQL / SQLite</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+      <div class="skill-item"><div class="skill-name">pandas / numpy</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+      <div class="skill-item"><div class="skill-name">Google Sheets API</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+      <div class="skill-item"><div class="skill-name">Looker Studio</div><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+      <div class="skill-item"><div class="skill-name">GitHub Actions</div><div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
+      <div class="skill-item"><div class="skill-name">Data Visualisation</div><div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div>
+      <div class="skill-item"><div class="skill-name">Supply Chain Analytics</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
     </div>
   </div>
 </section>
 
-<section class="section-exp" id="experience">
-  <p class="sec-label reveal">Experience</p>
-  
-  <div class="exp-item reveal">
-    <div class="exp-date">Jun 2025 — Jan 2026</div>
-    <div class="exp-info">
-      <h3 class="exp-role">Data and Reporting Analyst</h3>
-      <p class="exp-company">Wickes UK · Northampton, UK</p>
-      <ul class="exp-bullets">
-        <li>Automated daily stock verification process, reducing execution time from 60 minutes to 5 seconds.</li>
-        <li>Identified £145K in overstock risk through predictive inventory auditing models.</li>
-        <li>Developed real-time executive dashboards in Looker Studio for multi-site warehouse allocation.</li>
-        <li>Collaborated with Logistics and Buying teams to optimize SKU velocity tracking.</li>
-      </ul>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-label"><span>Get In Touch</span></div>
+      <h2 class="contact-title">Let's build<br>something <em>real.</em></h2>
+      <p class="contact-sub">
+        Actively looking for Data Analyst & Supply Chain Analytics roles.
+        Open to relocate to Netherlands or Singapore.
+        If you've got messy data that needs taming, I'm your person.
+      </p>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/navneet-kaur-analyst/" target="_blank" class="contact-link">
+          <div class="contact-link-icon">💼</div>
+          linkedin.com/in/navneet-kaur-analyst
+        </a>
+        <a href="https://github.com/neet813" target="_blank" class="contact-link">
+          <div class="contact-link-icon">⌨️</div>
+          github.com/neet813
+        </a>
+        <a href="/cdn-cgi/l/email-protection#610f0404150a134f5354535421060c00080d4f020e0c" class="contact-link">
+          <div class="contact-link-icon">✉️</div>
+          <span class="__cf_email__" data-cfemail="8de3e8e8f9e6ffa3bfb8bfb8cdeae0ece4e1a3eee2e0">[email&#160;protected]</span>
+        </a>
+      </div>
     </div>
-  </div>
-
-  <div class="exp-item reveal">
-    <div class="exp-date">2023 — 2025</div>
-    <div class="exp-info">
-      <h3 class="exp-role">Systems & Computer Science</h3>
-      <p class="exp-company">KSKV University · Gujarat, India</p>
-      <ul class="exp-bullets">
-        <li>Focused on Computational Logic, Database Management (RDBMS), and Algorithm Design.</li>
-        <li>Ranked top 10% in graduation class for technical problem-solving projects.</li>
-      </ul>
+    <div>
+      <div class="availability-badge">
+        <div class="avail-dot"></div>
+        <div class="avail-title">Open to Opportunities</div>
+        <div class="avail-sub">Data Analyst · Supply Chain Analytics<br>Operations Analytics · Business Intelligence<br><br>📍 Netherlands · Singapore · Remote</div>
+      </div>
     </div>
-  </div>
-</section>
-
-<section class="section-contact" id="contact">
-  <div class="contact-left reveal">
-    <h2 class="contact-headline">Let's build<br>something<br><em>impactful.</em></h2>
-    <p class="contact-sub">Currently in India, looking for full-time roles in Singapore, Netherlands, or Remote.</p>
-  </div>
-
-  <div class="contact-right reveal">
-    <a href="mailto:your.email@gmail.com" class="contact-item">
-      <div>
-        <div class="c-platform">Email</div>
-        <div class="c-value">Click to send message</div>
-      </div>
-      <div class="c-arrow">→</div>
-    </a>
-    <a href="https://linkedin.com/in/navneetkaur" class="contact-item" target="_blank">
-      <div>
-        <div class="c-platform">LinkedIn</div>
-        <div class="c-value">@navneetkaur</div>
-      </div>
-      <div class="c-arrow">→</div>
-    </a>
-    <a href="https://github.com/neet813" class="contact-item" target="_blank">
-      <div>
-        <div class="c-platform">GitHub</div>
-        <div class="c-value">@neet813</div>
-      </div>
-      <div class="c-arrow">→</div>
-    </a>
   </div>
 </section>
 
 <footer>
-  <div class="footer-name">NK — 2026</div>
-  <div class="footer-copy">Designed for operational excellence.</div>
+  <p>© 2026 Navneet Kaur — Built with <span>♥</span> and too much Python</p>
+  <p>Data Analyst <span>·</span> Operations <span>·</span> Automation</p>
 </footer>
 
-<div id="erik-wrap">
-  <div class="erik-bubble" id="erik-msg">Hey! I'm Erik.</div>
-  <div id="erik">
-    <div class="ek-head">
-      <div class="ek-crown"></div>
-      <div class="ek-screen">
-        <div class="ek-eyes">
-          <div class="ek-eye" id="e-l"></div>
-          <div class="ek-eye" id="e-r"></div>
-        </div>
-        <div class="ek-mouth-w"><div class="ek-mouth" id="e-m"></div></div>
-      </div>
-      <div class="ek-blush l"></div><div class="ek-blush r"></div>
-    </div>
-    <div class="ek-body"><div class="ek-bib"></div></div>
-    <div class="ek-arm l"><div class="ek-shoulder"></div><div class="ek-arm-body"></div></div>
-    <div class="ek-arm r"><div class="ek-shoulder"></div><div class="ek-arm-body"></div></div>
-    <div class="ek-base"></div>
-  </div>
-</div>
-
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-/* ── CURSOR LOGIC ── */
-const cur = document.getElementById('cur');
-const ring = document.getElementById('cur-ring');
-document.addEventListener('mousemove', (e) => {
-  cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px';
-  ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
+// ═══════════════════════════════════════════════
+// CURSOR
+// ═══════════════════════════════════════════════
+const cursorEl = document.getElementById('cursor');
+const trailEl = document.getElementById('cursorTrail');
+let mx = 0, my = 0, tx = 0, ty = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursorEl.style.left = mx - 6 + 'px';
+  cursorEl.style.top = my - 6 + 'px';
+});
+(function animTrail() {
+  tx += (mx - tx) * 0.12;
+  ty += (my - ty) * 0.12;
+  trailEl.style.left = tx - 18 + 'px';
+  trailEl.style.top = ty - 18 + 'px';
+  requestAnimationFrame(animTrail);
+})();
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursorEl.style.transform = 'scale(2.5)'; trailEl.style.transform = 'scale(1.5)'; });
+  el.addEventListener('mouseleave', () => { cursorEl.style.transform = 'scale(1)'; trailEl.style.transform = 'scale(1)'; });
 });
 
-/* ── REVEAL ON SCROLL ── */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// ═══════════════════════════════════════════════
+// BG SPACE CANVAS — full page deep space + robot
+// ═══════════════════════════════════════════════
+const bgCanvas = document.getElementById('bg-canvas');
+const bgRenderer = new THREE.WebGLRenderer({ canvas: bgCanvas, antialias: true, alpha: false });
+bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+bgRenderer.setSize(window.innerWidth, window.innerHeight);
 
-/* ── PROJECT FILTER ── */
-function filter(tag, e) {
-  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
-  e.target.classList.add('active');
-  document.querySelectorAll('.project-card').forEach(card => {
-    if(tag === 'all' || card.getAttribute('data-tags').includes(tag)) card.style.display = 'block';
-    else card.style.display = 'none';
+const bgScene = new THREE.Scene();
+bgScene.background = new THREE.Color(0x0A0A0F);
+bgScene.fog = new THREE.FogExp2(0x0A0A0F, 0.018);
+
+const bgCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
+bgCamera.position.set(0, 0, 8);
+
+// Stars
+function makeStars(count, spread, size, color, opacity) {
+  const geo = new THREE.BufferGeometry();
+  const pos = new Float32Array(count * 3);
+  for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * spread;
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat = new THREE.PointsMaterial({ color, size, transparent: true, opacity, sizeAttenuation: true });
+  return new THREE.Points(geo, mat);
+}
+bgScene.add(makeStars(4000, 300, 0.06, 0xffffff, 0.7));
+bgScene.add(makeStars(600, 200, 0.12, 0xFFB3CC, 0.5)); // pink stars
+bgScene.add(makeStars(300, 150, 0.18, 0xBAFF29, 0.4)); // lime stars
+
+// Nebula planes
+[
+  { x: 20, y: 10, z: -40, color: 0x1a0010, rx: 0.3 },
+  { x: -15, y: -8, z: -35, color: 0x0a1500, rx: -0.2 },
+].forEach(n => {
+  const geo = new THREE.PlaneGeometry(80, 50);
+  const mat = new THREE.MeshBasicMaterial({ color: n.color, transparent: true, opacity: 0.6, side: THREE.DoubleSide });
+  const m = new THREE.Mesh(geo, mat);
+  m.position.set(n.x, n.y, n.z);
+  m.rotation.x = n.rx;
+  bgScene.add(m);
+});
+
+// Robot (floating right side)
+const robot = new THREE.Group();
+
+const bMat = c => new THREE.MeshPhongMaterial({ color: c, shininess: 60 });
+
+// Body
+const body = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.85, 0.42), bMat(0x1a1028));
+robot.add(body);
+// Head
+const head = new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.44, 0.38), bMat(0x221838));
+head.position.y = 0.68;
+robot.add(head);
+// Eyes — pink!
+const eyeM = new THREE.MeshBasicMaterial({ color: 0xFF2D78 });
+const eyeGeo = new THREE.SphereGeometry(0.07, 8, 8);
+[-0.13, 0.13].forEach(x => {
+  const e = new THREE.Mesh(eyeGeo, eyeM.clone());
+  e.position.set(x, 0.72, 0.2);
+  robot.add(e);
+});
+// Antenna
+const ant = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.38, 6), bMat(0x554466));
+ant.position.set(0, 1.1, 0);
+robot.add(ant);
+const antBall = new THREE.Mesh(new THREE.SphereGeometry(0.055, 8, 8), new THREE.MeshBasicMaterial({ color: 0xBAFF29 }));
+antBall.position.set(0, 1.32, 0);
+robot.add(antBall);
+// Arms
+[-0.48, 0.48].forEach(x => {
+  const arm = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.58, 0.16), bMat(0x1a1028));
+  arm.position.set(x, 0, 0);
+  robot.add(arm);
+});
+// Legs
+[-0.22, 0.22].forEach(x => {
+  const leg = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.48, 0.18), bMat(0x1a1028));
+  leg.position.set(x, -0.68, 0);
+  robot.add(leg);
+});
+// Chest panel — lime
+const chest = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.2), new THREE.MeshBasicMaterial({ color: 0xBAFF29, transparent: true, opacity: 0.5 }));
+chest.position.set(0, 0.08, 0.22);
+robot.add(chest);
+
+robot.position.set(6, 0.5, 0);
+robot.scale.setScalar(1.4);
+bgScene.add(robot);
+
+// Ambient dust particles
+const dustGeo = new THREE.BufferGeometry();
+const dp = new Float32Array(600 * 3);
+for (let i = 0; i < 600 * 3; i++) dp[i] = (Math.random() - 0.5) * 40;
+dustGeo.setAttribute('position', new THREE.BufferAttribute(dp, 3));
+bgScene.add(new THREE.Points(dustGeo, new THREE.PointsMaterial({ color: 0x330022, size: 0.05, transparent: true, opacity: 0.5 })));
+
+bgScene.add(new THREE.AmbientLight(0x221133, 2));
+const pinkLight = new THREE.PointLight(0xFF2D78, 2, 25);
+pinkLight.position.set(8, 3, 3);
+bgScene.add(pinkLight);
+const limeLight = new THREE.PointLight(0xBAFF29, 1.5, 20);
+limeLight.position.set(-6, -2, 2);
+bgScene.add(limeLight);
+
+let bgMouseX = 0, bgMouseY = 0;
+document.addEventListener('mousemove', e => {
+  bgMouseX = (e.clientX / window.innerWidth - 0.5);
+  bgMouseY = -(e.clientY / window.innerHeight - 0.5);
+});
+
+const bgClock = new THREE.Clock();
+function animBg() {
+  requestAnimationFrame(animBg);
+  const t = bgClock.getElapsedTime();
+
+  // Robot float + sway
+  robot.position.y = 0.5 + Math.sin(t * 0.6) * 0.18;
+  robot.rotation.y = Math.sin(t * 0.25) * 0.25 - 0.3;
+  robot.rotation.z = Math.sin(t * 0.4) * 0.04;
+
+  // Eye pulse: alternate pink/lime
+  robot.children.forEach(c => {
+    if (c.material && c.material.color && c.geometry instanceof THREE.SphereGeometry && c.geometry.parameters.radius === 0.07) {
+      const h = 0.92 + Math.sin(t * 1.5) * 0.08; // hue shift pink↔magenta
+      c.material.color.setHSL(h, 1, 0.55);
+    }
   });
+  antBall.material.color.setHSL(0.22 + Math.sin(t) * 0.05, 1, 0.55);
+
+  // Subtle camera parallax
+  bgCamera.position.x += (bgMouseX * 0.4 - bgCamera.position.x) * 0.03;
+  bgCamera.position.y += (bgMouseY * 0.3 - bgCamera.position.y) * 0.03;
+  bgCamera.lookAt(0, 0, 0);
+
+  bgScene.children.forEach(obj => {
+    if (obj instanceof THREE.Points) obj.rotation.y += 0.00008;
+  });
+
+  bgRenderer.render(bgScene, bgCamera);
+}
+animBg();
+
+window.addEventListener('resize', () => {
+  bgCamera.aspect = window.innerWidth / window.innerHeight;
+  bgCamera.updateProjectionMatrix();
+  bgRenderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ═══════════════════════════════════════════════
+// GALLERY CANVAS — spatial curved screen world
+// ═══════════════════════════════════════════════
+const projects = [
+  {
+    num: '01',
+    label: 'Supply Chain Early Warning',
+    title: 'Supply Chain\nEarly Warning',
+    subtitle: 'Live Risk Intelligence System',
+    body: '4 global routes monitored daily.\n£25.2M financial exposure quantified.',
+    tags: ['Python', 'GitHub Actions', 'Google Sheets API', 'NOAA', 'Pandas'],
+    accent: '#FF2D78',
+    icon: '🚢',
+    link: 'https://github.com/neet813/Supply-Chain-Early-Warning',
+  },
+  {
+    num: '02',
+    label: 'SmartOps Task Platform',
+    title: 'SmartOps Task\nIntelligence',
+    subtitle: 'Operations Automation Platform',
+    body: 'Zero tasks slip through the cracks.\nAuto-scoring, escalation, email alerts.',
+    tags: ['Python', 'gspread', 'Apps Script', 'Gmail SMTP', 'Looker Studio'],
+    accent: '#BAFF29',
+    icon: '⚡',
+    link: 'https://github.com/neet813/SmartOps-Task-Platform',
+  },
+  {
+    num: '03',
+    label: 'Inventory Optimisation SQL',
+    title: 'Inventory\nOptimisation Engine',
+    subtitle: 'Stock Rebalancing & Analytics',
+    body: '£340k+ overstock identified.\nDays of manual work → 3 seconds.',
+    tags: ['Python', 'SQLite', 'pandas', 'numpy', 'Google Colab'],
+    accent: '#00D4FF',
+    icon: '📦',
+    link: 'https://github.com/neet813/Inventory-SQL',
+  }
+];
+
+const gCanvas = document.getElementById('gallery-canvas');
+const gWorld = document.getElementById('gallery-world');
+const gRenderer = new THREE.WebGLRenderer({ canvas: gCanvas, antialias: true, alpha: true });
+gRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+gRenderer.setClearColor(0x000000, 0);
+gRenderer.setSize(gWorld.offsetWidth, gWorld.offsetHeight);
+
+const gScene = new THREE.Scene();
+const gCamera = new THREE.PerspectiveCamera(55, gWorld.offsetWidth / gWorld.offsetHeight, 0.1, 100);
+gCamera.position.set(0, 0, 7);
+
+// Grid floor
+const grid = new THREE.GridHelper(60, 40, 0x330011, 0x1a000a);
+grid.position.y = -2.8;
+grid.material.transparent = true;
+grid.material.opacity = 0.7;
+gScene.add(grid);
+
+// Screen texture builder
+function makeScreenTex(p) {
+  const W = 900, H = 560;
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+
+  // BG gradient
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, '#0d0915');
+  g.addColorStop(1, '#060409');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+
+  // Top accent stripe
+  ctx.fillStyle = p.accent;
+  ctx.fillRect(0, 0, W, 4);
+
+  // Corner brackets
+  ctx.strokeStyle = p.accent;
+  ctx.lineWidth = 2;
+  ctx.globalAlpha = 0.7;
+  const b = 22;
+  [[16,16],[W-16,16],[16,H-16],[W-16,H-16]].forEach(([cx,cy], i) => {
+    ctx.beginPath();
+    if (i===0) { ctx.moveTo(cx,cy+b); ctx.lineTo(cx,cy); ctx.lineTo(cx+b,cy); }
+    if (i===1) { ctx.moveTo(cx-b,cy); ctx.lineTo(cx,cy); ctx.lineTo(cx,cy+b); }
+    if (i===2) { ctx.moveTo(cx,cy-b); ctx.lineTo(cx,cy); ctx.lineTo(cx+b,cy); }
+    if (i===3) { ctx.moveTo(cx-b,cy); ctx.lineTo(cx,cy); ctx.lineTo(cx,cy-b); }
+    ctx.stroke();
+  });
+  ctx.globalAlpha = 1;
+
+  // Num badge
+  ctx.fillStyle = p.accent + '18';
+  ctx.strokeStyle = p.accent + '55';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.rect(42, 38, 70, 28); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = p.accent;
+  ctx.font = '500 14px DM Mono, monospace';
+  ctx.fillText(p.num, 56, 57);
+
+  // Icon
+  ctx.font = '52px serif';
+  ctx.fillText(p.icon, 42, 150);
+
+  // Title
+  ctx.fillStyle = '#F0EEF8';
+  ctx.font = '800 56px Syne, sans-serif';
+  p.title.split('\n').forEach((line, i) => ctx.fillText(line, 42, 218 + i * 64));
+
+  // Subtitle
+  ctx.fillStyle = p.accent;
+  ctx.font = '400 18px DM Mono, monospace';
+  ctx.fillText(p.subtitle, 42, 218 + p.title.split('\n').length * 64 + 8);
+
+  // Body
+  ctx.fillStyle = 'rgba(240,238,248,0.4)';
+  ctx.font = '300 16px DM Mono, monospace';
+  p.body.split('\n').forEach((line, i) => ctx.fillText(line, 42, 368 + i * 26));
+
+  // Tags
+  let tx2 = 42;
+  ctx.font = '400 13px DM Mono, monospace';
+  p.tags.forEach(tag => {
+    const tw = ctx.measureText(tag).width + 22;
+    if (tx2 + tw > W - 42) return;
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.rect(tx2, 428, tw, 26); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,0.45)';
+    ctx.fillText(tag, tx2 + 11, 446);
+    tx2 += tw + 8;
+  });
+
+  // CTA
+  ctx.fillStyle = p.accent;
+  ctx.font = '600 15px Syne, sans-serif';
+  ctx.fillText('View Project →', 42, H - 26);
+
+  // Scanlines
+  ctx.fillStyle = 'rgba(0,0,0,0.035)';
+  for (let y = 0; y < H; y += 3) ctx.fillRect(0, y, W, 1);
+
+  return new THREE.CanvasTexture(cv);
 }
 
-/* ── ERIK BEHAVIOUR ── */
-const bubble = document.getElementById('erik-msg');
-const messages = [
-  "Did you see the £145k risk Navneet found?",
-  "Her SQL logic is actually quite elegant.",
-  "Ask her about the Red Sea route alerts!",
-  "She automated me too... kind of.",
-  "Hire her before I start my own company."
-];
-setInterval(() => {
-  bubble.innerText = messages[Math.floor(Math.random()*messages.length)];
-  bubble.classList.add('show');
-  setTimeout(() => bubble.classList.remove('show'), 4000);
-}, 12000);
+// Build arc of screens
+const SCREEN_W = 3.4, SCREEN_H = 2.1;
+const ARC_R = 16, ARC_SPREAD = Math.PI * 0.45;
+const screenMeshes = [], frameMeshes = [];
 
-</script>
-</body>
-</html>
+projects.forEach((p, i) => {
+  const total = projects.length;
+  const angle = -ARC_SPREAD / 2 + (i / (total - 1)) * ARC_SPREAD;
+
+  const tex = makeScreenTex(p);
+  const geo = new THREE.PlaneGeometry(SCREEN_W, SCREEN_H);
+  const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0, side: THREE.FrontSide });
+  const mesh = new THREE.Mesh(geo, mat);
+
+  mesh.position.set(
+    Math.sin(angle) * ARC_R,
+    0,
+    -Math.cos(angle) * ARC_R + ARC_R - 7
+  );
+  mesh.rotation.y = angle;
+  mesh.userData = { index: i, angle, baseY: 0, link: p.link };
+  gScene.add(mesh);
+  screenMeshes.push(mesh);
+
+  // Glow frame
+  const fGeo = new THREE.EdgesGeometry(new THREE.PlaneGeometry(SCREEN_W + 0.06, SCREEN_H + 0.06));
+  const fMat = new THREE.LineBasicMaterial({ color: new THREE.Color(p.accent), transparent: true, opacity: 0 });
+  const frame = new THREE.LineSegments(fGeo, fMat);
+  frame.position.copy(mesh.position);
+  frame.rotation.copy(mesh.rotation);
+  frame.position.z += 0.01;
+  gScene.add(frame);
+  frameMeshes.push(frame);
+  mesh.userData.frame = frame;
+});
+
+gScene.add(new THREE.AmbientLight(0x221133, 3));
+const gPink = new THREE.PointLight(0xFF2D78, 2, 30);
+gPink.position.set(0, 3, 5);
+gScene.add(gPink);
+
+// Nav dots
+const dotsWrap = document.getElementById('gallery-dots');
+const gsiNum = document.getElementById('gsi-num');
+const gsiLabel = document.getElementById('gsi-label');
+
+projects.forEach((p, i) => {
+  const d = document.createElement('div');
+  d.className = 'gdot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsWrap.appendChild(d);
+});
+
+// Navigation state
+let current = 0;
+let targetCamX = 0;
+let camX = 0;
+
+function goTo(idx) {
+  if (idx < 0 || idx >= projects.length) return;
+  current = idx;
+  targetCamX = screenMeshes[idx].userData.angle !== undefined
+    ? Math.sin(screenMeshes[idx].userData.angle) * ARC_R * 0.55
+    : 0;
+  document.querySelectorAll('.gdot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  gsiNum.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(projects.length).padStart(2, '0');
+  gsiLabel.textContent = projects[idx].label;
+  document.getElementById('gallery-world').querySelector('.gallery-hint').style.opacity = '0';
+}
+
+// Drag / swipe
+let dragStartX = null, dragDelta2 = 0;
+gCanvas.addEventListener('mousedown', e => { dragStartX = e.clientX; dragDelta2 = 0; });
+gCanvas.addEventListener('mousemove', e => { if (dragStartX !== null) dragDelta2 = dragStartX - e.clientX; });
+gCanvas.addEventListener('mouseup', () => {
+  if (Math.abs(dragDelta2) > 55) goTo(dragDelta2 > 0 ? Math.min(current + 1, projects.length - 1) : Math.max(current - 1, 0));
+  else if (Math.abs(dragDelta2) < 8) window.open(projects[current].link, '_blank');
+  dragStartX = null; dragDelta2 = 0;
+});
+gCanvas.addEventListener('mouseleave', () => { dragStartX = null; });
+gCanvas.addEventListener('touchstart', e => { dragStartX = e.touches[0].clientX; }, { passive: true });
+gCanvas.addEventListener('touchmove', e => { if (dragStartX !== null) dragDelta2 = dragStartX - e.touches[0].clientX; }, { passive: true });
+gCanvas.addEventListener('touchend', () => {
+  if (Math.abs(dragDelta2) > 55) goTo(dragDelta2 > 0 ? Math.min(current + 1, projects.length - 1) : Math.max(current - 1, 0));
+  dragStartX = null; dragDelta2 = 0;
+});
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') goTo(Math.max(current - 1, 0));
+  if (e.key === 'ArrowRight') goTo(Math.min(current + 1, projects.length - 1));
+});
+
+function lerpN(a, b, t) { return a + (b - a) * t; }
+
+const gClock = new THREE.Clock();
+function animGallery() {
+  requestAnimationFrame(animGallery);
+  const t = gClock.getElapsedTime();
+
+  camX = lerpN(camX, targetCamX, 0.06);
+  gCamera.position.x = camX;
+  gCamera.lookAt(camX * 0.25, 0, -2);
+
+  screenMeshes.forEach((m, i) => {
+    const dist = Math.abs(i - current);
+    const tOp = dist === 0 ? 1 : dist === 1 ? 0.28 : 0.06;
+    m.material.opacity = lerpN(m.material.opacity, tOp, 0.07);
+    frameMeshes[i].material.opacity = lerpN(frameMeshes[i].material.opacity, dist === 0 ? 0.85 : 0, 0.07);
+    m.position.y = Math.sin(t * 0.5 + i * 1.3) * 0.06;
+    frameMeshes[i].position.y = m.position.y;
+  });
+
+  gPink.position.x = Math.sin(t * 0.4) * 4;
+  grid.material.opacity = 0.4 + 0.2 * Math.sin(t * 0.4);
+
+  gRenderer.render(gScene, gCamera);
+}
+animGallery();
+
+window.addEventListener('resize', () => {
+  gCamera.aspect = gWorld.offsetWidth / gWorld.offsetHeight;
+  gCamera.updateProjectionMatrix();
+  gRenderer.setSize(gWorld.offsetWidth, gWorld.offsetHeight);
+});
+
+// init
+setTimeout(() => goTo(0), 300);
+
+// ═══════════════════════════════════════════════
+// SKILL BARS
+// ═══════════════════════════════════════════════
+const skillObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar
