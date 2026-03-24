@@ -323,130 +323,94 @@ h2 em { font-style:italic; }
 .stag:hover { border-color:var(--amber); color:var(--amber); background:var(--amber3); }
 
 /* ── PROJECTS ── */
-/* ── THE WHITE GALLERY (HORIZONTAL) ── */
+/* ── THE BLACK & WHITE GALLERY RESET ── */
 
-/* ── PROJECTS HEADER STYLING ── */
-
-.projects-header {
-  margin-bottom: 40px;
-  text-align: left;
+#projects {
+  background: #000000 !important; /* Force black background */
+  padding: 100px 0;
+  color: #ffffff !important;
+  display: block;
 }
 
+/* Header Styling */
+.projects-header {
+  margin-bottom: 40px;
+}
 .header-label {
   display: block;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
   letter-spacing: 3px;
-  color: #666; /* Dimmed white/grey */
-  margin-bottom: 8px;
+  color: #666;
   text-transform: uppercase;
 }
-
 .header-title {
   font-family: 'Playfair Display', serif;
   font-size: 48px;
-  font-weight: 700;
   color: #ffffff !important;
-  margin: 0;
-  letter-spacing: -1px;
+  margin: 10px 0;
 }
 
-.header-line {
-  width: 60px;
-  height: 2px;
-  background: #ffffff;
-  margin-top: 15px;
-  opacity: 0.3;
-}
-  
-#projects {
-  background: #000000; /* Pure Black Section */
-  padding: 100px 0;
-  color: #ffffff;
-}
-
+/* Carousel Layout */
 .projects-container {
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   gap: 24px;
-  padding: 40px 0;
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  padding: 20px 0;
+  scrollbar-width: none;
 }
-
-.projects-container::-webkit-scrollbar { display: none; } /* Hide scrollbar for Chrome/Safari */
+.projects-container::-webkit-scrollbar { display: none; }
 
 .carousel-item {
-  flex: 0 0 420px; /* Width of each project 'clip' */
+  flex: 0 0 420px;
   scroll-snap-align: start;
 }
 
+/* Card Styling */
 .proj-card {
-  background: #0a0a0a;
+  background: #111111 !important; /* Dark card */
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
   padding: 40px 30px;
   height: 480px;
   display: flex;
   flex-direction: column;
-  transition: all 0.4s ease;
-  text-decoration: none;
-  cursor: pointer;
+  text-decoration: none !important; /* Remove blue underline */
+  transition: 0.4s;
 }
 
-/* Hover: White Glow & Underline */
-.carousel-item:hover .proj-card {
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-8px);
+.proj-card:hover {
+  border-color: #ffffff;
+  transform: translateY(-5px);
 }
 
-.carousel-item:hover .pc-name {
-  color: #ffffff !important;
-  text-decoration: underline;
-  text-decoration-color: #ffffff;
-  text-underline-offset: 8px;
-}
-
-/* Typography & Spacing Fixes */
 .pc-name {
   color: #ffffff !important;
-  font-size: 26px !important;
-  margin-bottom: 12px;
+  font-size: 24px !important;
+  margin: 15px 0;
+  text-decoration: none !important;
 }
 
 .pc-body {
   color: #999 !important;
-  font-size: 14.5px;
+  font-size: 14px;
   line-height: 1.6;
-  flex: 0 1 auto !important; /* FIXES THE DEAD SPACE */
-  margin-bottom: 24px !important;
+  margin-bottom: 20px;
 }
 
-/* White Tag Styling */
+/* Tag Styling */
 .pc-tags {
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
-  margin-top: auto; /* Pushes tags to the bottom */
+  margin-top: auto;
 }
-
 .ptag {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.3);
   padding: 4px 10px;
   text-transform: uppercase;
-  border-radius: 2px;
-}
-
-.status-badge {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  color: #ffffff;
-  opacity: 0.5;
-  margin-bottom: 20px;
-  letter-spacing: 2px;
 }
 
 /* ── SKILLS ── */
@@ -656,65 +620,57 @@ footer span {
     <div class="projects-header">
        <span class="header-label">SELECTED WORK</span>
        <h2 class="header-title">PROJECTS</h2>
-       <div class="header-line"></div>
     </div>
 
     <div class="projects-container">
-       ...
-    </div>
+      
+      <div class="carousel-item">
+        <a href="https://github.com/neet813/Inventory-Optimisation/blob/main/README.md" target="_blank" class="proj-card">
+          <div style="font-family: 'IBM Plex Mono'; font-size: 10px; color: #666;">01 // OPTIMISATION</div>
+          <h3 class="pc-name">Inventory Rebalancing Engine</h3>
+          <p class="pc-body">Turning multi-warehouse chaos into 3-second automated intelligence. Identifies exact stock rebalancing needs to save £340k.</p>
+          <div class="pc-tags">
+            <span class="ptag">SQL</span><span class="ptag">Python</span>
+          </div>
+        </a>
+      </div>
 
+      <div class="carousel-item">
+        <a href="https://github.com/neet813/SmartOps/blob/main/README.md" target="_blank" class="proj-card">
+          <div style="font-family: 'IBM Plex Mono'; font-size: 10px; color: #666;">02 // OPS</div>
+          <h3 class="pc-name">SmartOps Task Intelligence</h3>
+          <p class="pc-body">Zero-leakage workflow orchestration. Auto-scoring, priority escalation, and email alerts for global operations.</p>
+          <div class="pc-tags">
+            <span class="ptag">Automation</span><span class="ptag">G-Suite</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="carousel-item">
+        <a href="https://github.com/neet813/Supply-Chain-Risk/blob/main/README.md" target="_blank" class="proj-card">
+          <div style="font-family: 'IBM Plex Mono'; font-size: 10px; color: #666;">03 // RISK</div>
+          <h3 class="pc-name">Supply Chain Early Warning</h3>
+          <p class="pc-body">Live risk intelligence monitoring 4 global shipping routes with automated daily reports via GitHub Actions.</p>
+          <div class="pc-tags">
+            <span class="ptag">GitHub Actions</span><span class="ptag">APIs</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="carousel-item">
+        <a href="https://github.com/neet813/Logistics-Analysis/blob/main/README.md" target="_blank" class="proj-card">
+          <div style="font-family: 'IBM Plex Mono'; font-size: 10px; color: #666;">04 // FORENSICS</div>
+          <h3 class="pc-name">Ghost Delivery Analysis</h3>
+          <p class="pc-body">Forensic analysis of 43k+ records to surface physical impossibilities and quantify ₹1.83Cr in revenue leakage.</p>
+          <div class="pc-tags">
+            <span class="ptag">Python</span><span class="ptag">Forensics</span>
+          </div>
+        </a>
+      </div>
+
+    </div>
   </div>
 </section>
-
-<div class="projects-container">
-  
-  <div class="carousel-item">
-    <a href="https://github.com/neet813/Inventory-SQL" target="_blank" class="proj-card">
-      <div class="status-badge">01 // OPTIMISATION</div>
-      <h3 class="pc-name">Inventory Rebalancing Engine</h3>
-      <p class="pc-body">Turning multi-warehouse chaos into 3-second automated intelligence. Identifies exact stock rebalancing needs to save £340k in identified leakage.</p>
-      <div class="pc-tags">
-        <span class="ptag">SQL</span><span class="ptag">Python</span><span class="ptag">SQLite</span>
-      </div>
-    </a>
-  </div>
-
-  <div class="carousel-item">
-    <a href="https://github.com/neet813/SmartOps-Task-Platform" target="_blank" class="proj-card">
-      <div class="status-badge">02 // OPS</div>
-      <h3 class="pc-name">SmartOps Task Intelligence</h3>
-      <p class="pc-body">Zero-leakage workflow orchestration. Auto-scoring, priority escalation, and email alerts for global operations without manual checking.</p>
-      <div class="pc-tags">
-        <span class="ptag">Apps Script</span><span class="ptag">Automation</span>
-      </div>
-    </a>
-  </div>
-
-  <div class="carousel-item">
-    <a href="https://github.com/neet813/Supply-Chain-Early-Warning" target="_blank" class="proj-card">
-      <div class="status-badge">03 // RISK</div>
-      <h3 class="pc-name">Supply Chain Early Warning</h3>
-      <p class="pc-body">Live risk intelligence monitoring 4 global shipping routes. Engineered data orchestration using Python and GitHub Actions for daily reports.</p>
-      <div class="pc-tags">
-        <span class="ptag">GitHub Actions</span><span class="ptag">Pandas</span>
-      </div>
-    </a>
-  </div>
-
-  <div class="carousel-item">
-    <a href="https://github.com/neet813/amazon-ghost-delivery-analysis" target="_blank" class="proj-card">
-      <div class="status-badge">04 // FORENSICS</div>
-      <h3 class="pc-name">Ghost Delivery Risk Analysis</h3>
-      <p class="pc-body">Performing data forensics on 43,739 delivery records to surface physical impossibilities and quantify ₹1.83Cr in last-mile revenue leakage.</p>
-      <div class="pc-tags">
-        <span class="ptag">Python</span><span class="ptag">Forensics</span><span class="ptag">Looker</span>
-      </div>
-    </a>
-  </div>
-
-</div>
-
-
 
       
   
