@@ -324,123 +324,101 @@ h2 em { font-style:italic; }
 
 /* ── PROJECTS ── */
 
-/* ── THEME & UTILITIES ── */
-:root {
-  --theater-bg: #121214;  /* Deep charcoal/black */
-  --film-frame: #1e1e21; /* Slightly lighter for the frame */
-  --ink1: #e0e0e0;      /* Lighter text for contrast */
-  --amber: #c07830;     /* Keeps your amber accent */
-  --rule: #3a3a3d;      /* Darker borders */
-}
+/* ── THE STREAMING GALLERY ── */
 
-/* Adjust overall section background for theater feel */
 #projects {
-  background-color: var(--theater-bg);
-  padding: 6rem 0;
+  background: #0f0f0f; /* Pitch black background for this section only */
+  padding: 80px 0;
+  color: #ffffff;
 }
 
-.sec-idx, h2 {
-  color: var(--ink1); /* White text for section headers */
+#projects h2, #projects .sec-idx {
+  color: #ffffff;
 }
-
-/* ── CINEMATIC PROJECTS CAROUSEL ── */
 
 .projects-container {
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  gap: 3rem; /* wider gap for film separation */
-  padding: 1rem 0 3rem 0;
-  -webkit-overflow-scrolling: touch;
+  gap: 20px;
+  padding: 40px 20px;
+  scrollbar-width: none; /* Hide scrollbar Firefox */
 }
 
-/* Hide scrollbar */
 .projects-container::-webkit-scrollbar { display: none; }
-.projects-container { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* The Film Strip (Project Item) */
 .carousel-item {
-  flex: 0 0 85%;
-  scroll-snap-align: center;
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.5s ease;
-  position: relative; /* for sprocket holes */
+  flex: 0 0 400px; /* Fixed width for a "movie poster" feel */
+  scroll-snap-align: start;
+  perspective: 1000px; /* For a slight 3D effect */
 }
 
-/* Sprocket Holes (Top and Bottom) */
-.carousel-item::before, .carousel-item::after {
-  content: '';
-  position: absolute;
-  left: 1.5rem; /* spacing from edge */
-  right: 1.5rem;
-  height: 0.8rem; /* hole height */
-  background-image: linear-gradient(to right, transparent 50%, #121214 50%); /* hole pattern */
-  background-size: 1.5rem 100%; /* hole spacing */
-  opacity: 0.6;
-}
-.carousel-item::before { top: 1.5rem; } /* holes on top */
-.carousel-item::after { bottom: 1.5rem; } /* holes on bottom */
-
-/* Mobile scaling: cards slightly zoomed out by default */
-@media (max-width: 899px) {
-  .carousel-item { transform: scale(0.95); }
+.proj-card, .proj-featured {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 30px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Desktop: cards are 100% size, showing ~2 */
-@media (min-width: 900px) {
-  .carousel-item { flex: 0 0 48%; }
-}
-
-/* The Movie Scene (Project Card Styling) */
-.carousel-item .proj-card, 
-.carousel-item .proj-featured {
-  background: var(--film-frame);
-  border: 4px solid #000; /* Black outer frame */
-  border-radius: 4px; /* classic film frame is sharp */
-  padding: 4rem 3rem; /* extra padding to create the 'screen' */
-  height: 100%;
-  margin-bottom: 0;
-  color: var(--ink1); /* Ensure internal text is white */
-  
-  /* Classic Film Textures & Vignette */
-  background-image: 
-    radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.5) 100%), /* vignette */
-    url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>'); /* grain */
-  background-blend-mode: overlay, screen;
-  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-/* Hover/Active: 'The Projector Lights Up' */
+/* The "Glow" Effect on Hover */
 .carousel-item:hover .proj-card, 
-.carousel-item:hover .proj-featured,
-.carousel-item:active .proj-card, 
-.carousel-item:active .proj-featured {
-  border-color: var(--amber); /* frame turns amber */
-  transform: scale(1.02); /* card expands slightly */
-  box-shadow: 0 0 50px rgba(192, 120, 48, 0.25); /* amber glow */
-  
-  /* Brighten the scene content on hover */
-  background-blend-mode: color-burn, screen;
-  background-image: 
-    radial-gradient(ellipse at center, transparent 10%, rgba(0,0,0,0.3) 100%), 
-    url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+.carousel-item:hover .proj-featured {
+  border-color: var(--amber);
+  transform: translateY(-10px) rotateX(2deg);
+  box-shadow: 0 15px 35px rgba(192, 120, 48, 0.2);
 }
 
-/* Stylized Status Badge */
+/* Glassmorphism Header inside card */
 .status-badge {
-  color: var(--amber);
+  display: inline-block;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  border: 1px solid var(--amber);
-  padding: 4px 10px;
-  border-radius: 4px;
+  font-size: 10px;
+  background: rgba(255,255,255,0.05);
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 20px;
+  color: var(--amber);
+}
+
+.pc-name, .pf-name {
+  font-size: 24px !important;
+  line-height: 1.2;
+  margin-bottom: 15px;
+  color: #fff !important;
+}
+
+.pc-body, .pf-body {
+  color: #999 !important;
+  font-size: 14px;
+}
+
+/* The "Play" Icon appearance */
+.proj-card::after {
+  content: '▶';
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  font-size: 20px;
+  opacity: 0;
+  transition: 0.3s;
+  color: var(--amber);
+}
+
+.carousel-item:hover .proj-card::after {
+  opacity: 1;
 }
 
 
   
+
 /* ── SKILLS ── */
 .skills-grid {
   display:grid; grid-template-columns:repeat(3,1fr); gap:3rem;
