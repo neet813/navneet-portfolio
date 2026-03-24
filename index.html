@@ -324,99 +324,105 @@ h2 em { font-style:italic; }
 
 /* ── PROJECTS ── */
 
-/* ── THE STREAMING GALLERY ── */
+
+  /* ── THE UPDATED PROJECTS GALLERY (WHITE & CLEAN) ── */
 
 #projects {
-  background: #0f0f0f; /* Pitch black background for this section only */
-  padding: 80px 0;
-  color: #ffffff;
+  background: #000000; /* Pure black section */
+  padding: 100px 0;
 }
 
-#projects h2, #projects .sec-idx {
-  color: #ffffff;
-}
-
+/* Fix for the container layout */
 .projects-container {
   display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  gap: 20px;
-  padding: 40px 20px;
-  scrollbar-width: none; /* Hide scrollbar Firefox */
-}
-
-.projects-container::-webkit-scrollbar { display: none; }
-
-.carousel-item {
-  flex: 0 0 400px; /* Fixed width for a "movie poster" feel */
-  scroll-snap-align: start;
-  perspective: 1000px; /* For a slight 3D effect */
-}
-
-.proj-card, .proj-featured {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 30px;
-  height: 450px;
-  display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* Featured & Standard Card Unified Styling */
+.proj-featured, .proj-card {
+  background: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
   transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
-  position: relative;
-  overflow: hidden;
+  text-decoration: none;
 }
 
-/* The "Glow" Effect on Hover */
-.carousel-item:hover .proj-card, 
-.carousel-item:hover .proj-featured {
-  border-color: var(--amber);
-  transform: translateY(-10px) rotateX(2deg);
-  box-shadow: 0 15px 35px rgba(192, 120, 48, 0.2);
+.proj-featured::before, .proj-card::after {
+  background: #ffffff !important; /* White accent line */
 }
 
-/* Glassmorphism Header inside card */
-.status-badge {
-  display: inline-block;
+/* Card Hover Effects */
+.proj-featured:hover, .proj-card:hover {
+  background: #0a0a0a !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+}
+
+.proj-featured:hover .pf-name, .proj-card:hover .pc-name {
+  text-decoration: underline;
+  text-decoration-color: #ffffff;
+  text-underline-offset: 8px;
+}
+
+/* Typography and Spacing Fix */
+.pf-name, .pc-name {
+  color: #ffffff !important;
+  font-family: 'Playfair Display', serif;
+}
+
+.pf-body, .pc-body {
+  color: #999 !important; /* Subtle white for description */
+  flex: 0 1 auto !important; /* Removes the "weird" vertical space */
+  margin-bottom: 1.5rem !important;
+  line-height: 1.6;
+}
+
+/* The White Tags */
+.pc-tags, .pf-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.ptag {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
-  background: rgba(255,255,255,0.05);
-  padding: 5px 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.1);
-  margin-bottom: 20px;
-  color: var(--amber);
-}
-
-.pc-name, .pf-name {
-  font-size: 24px !important;
-  line-height: 1.2;
-  margin-bottom: 15px;
-  color: #fff !important;
-}
-
-.pc-body, .pf-body {
-  color: #999 !important;
-  font-size: 14px;
-}
-
-/* The "Play" Icon appearance */
-.proj-card::after {
-  content: '▶';
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
-  font-size: 20px;
-  opacity: 0;
+  text-transform: uppercase;
+  color: #ffffff !important;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 4px 10px;
+  border-radius: 2px;
   transition: 0.3s;
-  color: var(--amber);
 }
 
-.carousel-item:hover .proj-card::after {
-  opacity: 1;
+.ptag:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
 }
 
+/* Status Badges */
+.status-badge, .pf-sub, .pc-sub {
+  color: #ffffff !important;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: inline-block;
+  opacity: 0.8;
+}
 
+/* Featured Section Adjustments */
+.pf-right {
+  background: #050505 !important; /* Slightly lighter black for contrast */
+}
+.pf-stat-val {
+  color: #ffffff !important;
+}
   
 
 /* ── SKILLS ── */
@@ -628,57 +634,56 @@ footer span {
     </div>
 
     <div class="projects-container">
-      <div class="carousel-item">
-        <a href="#" class="proj-card">
-          <div class="card-top">
-            <div class="status-badge">SQL • OPTIMISATION</div>
-            <h3 class="pc-name">Inventory Rebalancing Engine</h3>
-            <p class="pc-body">Turning multi-warehouse chaos into 3-second automated intelligence. Saved £340k in identified leakage.</p>
+      <a href="https://github.com/neet813" target="_blank" class="proj-featured">
+        <div class="pf-left">
+          <div class="pf-num">PROJECT // 01</div>
+          <h3 class="pf-name">Inventory Rebalancing Engine</h3>
+          <p class="pf-body">Turning multi-warehouse chaos into automated intelligence. Designed to detect stock imbalances across global hubs and suggest transfers before stockouts occur.</p>
+          <div class="pf-tags">
+            <span class="ptag">SQL</span><span class="ptag">Python</span><span class="ptag">Pandas</span>
           </div>
-          <div class="pc-tags">
-            <span class="ptag">Python</span><span class="ptag">SQLite</span>
+          <span class="pf-arrow">VIEW REPOSITORY ↗</span>
+        </div>
+        <div class="pf-right">
+          <div class="pf-stat">
+            <div class="pf-stat-label">Identified Leakage</div>
+            <div class="pf-stat-val">£340K</div>
+            <p class="pf-stat-desc">Calculated potential savings by optimizing inter-warehouse transfers.</p>
           </div>
-        </a>
-      </div>
+        </div>
+      </a>
 
-      <div class="carousel-item">
-        <a href="#" class="proj-card">
-          <div class="card-top">
-            <div class="status-badge">OPS • AUTOMATION</div>
-            <h3 class="pc-name">SmartOps Task Intelligence</h3>
-            <p class="pc-body">Zero-leakage workflow orchestration. Auto-scoring and priority escalation for global operations.</p>
-          </div>
+      <div class="proj-pair">
+        <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="pc-num">PROJECT // 02</div>
+          <h3 class="pc-name">SmartOps Task Intelligence</h3>
+          <p class="pc-body">Zero-leakage workflow orchestration. Automated priority escalation for logistics operations to ensure SLA compliance.</p>
           <div class="pc-tags">
             <span class="ptag">Apps Script</span><span class="ptag">Automation</span>
           </div>
+          <span class="pc-arrow">DETAILS ↗</span>
+        </a>
+
+        <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="pc-num">PROJECT // 03</div>
+          <h3 class="pc-name">Supply Chain Early Warning</h3>
+          <p class="pc-body">Real-time risk scoring for global shipping routes using external APIs and GitHub Actions for automated daily reports.</p>
+          <div class="pc-tags">
+            <span class="ptag">GitHub Actions</span><span class="ptag">APIs</span>
+          </div>
+          <span class="pc-arrow">DETAILS ↗</span>
         </a>
       </div>
 
-      <div class="carousel-item">
-        <a href="#" class="proj-card">
-          <div class="card-top">
-            <div class="status-badge">RISK • MONITORING</div>
-            <h3 class="pc-name">Supply Chain Early Warning</h3>
-            <p class="pc-body">Daily risk-scoring for global shipping routes. Automated intelligence for logistics resilience.</p>
-          </div>
-          <div class="pc-tags">
-            <span class="ptag">GitHub Actions</span><span class="ptag">Data Viz</span>
-          </div>
-        </a>
-      </div>
-
-      <div class="carousel-item">
-        <a href="#" class="proj-card">
-          <div class="card-top">
-            <div class="status-badge">LOGISTICS • FORENSICS</div>
-            <h3 class="pc-name">Ghost Delivery Analysis</h3>
-            <p class="pc-body">Investigating 43k+ delivery records to expose last-mile fraud patterns and revenue leakage.</p>
-          </div>
-          <div class="pc-tags">
-            <span class="ptag">Pandas</span><span class="ptag">Analytics</span>
-          </div>
-        </a>
-      </div>
+      <a href="https://github.com/neet813" target="_blank" class="proj-card" style="margin-top: 1.2rem;">
+        <div class="pc-num">PROJECT // 04</div>
+        <h3 class="pc-name">Ghost Delivery Analysis</h3>
+        <p class="pc-body">Investigating 43k+ delivery records using forensic data techniques to expose last-mile fraud patterns and revenue leakage in high-density urban routes.</p>
+        <div class="pc-tags">
+          <span class="ptag">Data Forensics</span><span class="ptag">Python</span><span class="ptag">Visualization</span>
+        </div>
+        <span class="pc-arrow">CASE STUDY ↗</span>
+      </a>
     </div>
   </div>
 </section>
