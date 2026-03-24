@@ -323,133 +323,44 @@ h2 em { font-style:italic; }
 .stag:hover { border-color:var(--amber); color:var(--amber); background:var(--amber3); }
 
 /* ── PROJECTS ── */
-.proj-featured {
-  display:grid; grid-template-columns:1fr 1fr;
-  border:1px solid var(--rule);
-  margin-bottom:1.2rem;
-  text-decoration:none; color:inherit;
-  transition:all 0.3s;
-  position:relative; overflow:hidden;
-  background:var(--cream);
-}
-.proj-featured::before {
-  content:''; position:absolute;
-  top:0; left:0; bottom:0; width:3px;
-  background:linear-gradient(to bottom, var(--amber), var(--amber2));
-  transform:scaleY(0); transform-origin:top;
-  transition:transform 0.4s ease;
-}
-.proj-featured:hover { background:var(--paper); box-shadow:0 8px 40px rgba(0,0,0,0.06); }
-.proj-featured:hover::before { transform:scaleY(1); }
-.proj-featured:hover .pf-arrow { transform:translate(4px,-4px); color:var(--amber); }
-
-.pf-left {
-  padding:3rem 3rem 3rem 3.5rem;
-  border-right:1px solid var(--rule);
-  display:flex; flex-direction:column; justify-content:space-between;
-}
-.pf-right {
-  padding:3rem;
-  display:flex; flex-direction:column; justify-content:space-between;
-  background:var(--paper);
-}
-.pf-num {
-  font-family:'IBM Plex Mono', monospace;
-  font-size:0.6rem; letter-spacing:0.18em;
-  color:var(--ink3); margin-bottom:1.5rem;
-}
-.pf-name {
-  font-family:'Playfair Display', serif;
-  font-size:1.9rem; font-weight:400; line-height:1.1;
-  color:var(--ink); margin-bottom:0.5rem;
-}
-.pf-sub {
-  font-family:'IBM Plex Mono', monospace;
-  font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--amber); margin-bottom:2rem;
-}
-.pf-body {
-  font-size:0.88rem; line-height:1.85; color:var(--ink2);
-  flex:1; margin-bottom:2rem;
-}
-.pf-tags { display:flex; flex-wrap:wrap; gap:5px; }
-.ptag {
-  font-family:'IBM Plex Mono', monospace;
-  font-size:0.56rem; padding:3px 9px;
-  border:1px solid var(--rule); color:var(--ink3);
-}
-.pf-stat-label {
-  font-family:'IBM Plex Mono', monospace;
-  font-size:0.56rem; letter-spacing:0.12em; text-transform:uppercase;
-  color:var(--ink3); margin-bottom:4px;
-}
-.pf-stat-val {
-  font-family:'Playfair Display', serif;
-  font-size:2.8rem; font-weight:500;
-  color:var(--amber); line-height:1;
-  margin-bottom:0.5rem;
-}
-.pf-stat-desc {
-  font-size:0.82rem; line-height:1.7; color:var(--ink2);
-}
-.pf-arrow {
-  font-family:'IBM Plex Mono', monospace;
-  font-size:0.68rem; letter-spacing:0.1em;
-  color:var(--ink3); margin-top:2rem;
-  transition:transform 0.25s, color 0.25s;
-  display:inline-block;
+/* ── UPDATED PROJECTS CAROUSEL ── */
+.projects-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 1.5rem;
+  padding: 1rem 0 3rem 0;
+  -webkit-overflow-scrolling: touch;
 }
 
-.proj-pair {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:1.2rem;
+/* Hide scrollbar */
+.projects-container::-webkit-scrollbar {
+  display: none;
 }
-.proj-card {
-  padding:2.5rem;
-  border:1px solid var(--rule);
-  text-decoration:none; color:inherit;
-  display:flex; flex-direction:column;
-  position:relative; overflow:hidden;
-  transition:all 0.3s;
-  background:var(--cream);
-}
-.proj-card::after {
-  content:''; position:absolute;
-  bottom:0; left:0; right:0; height:2px;
-  background:linear-gradient(90deg, var(--amber), var(--amber2));
-  transform:scaleX(0); transform-origin:left;
-  transition:transform 0.35s ease;
-}
-.proj-card:hover { background:var(--paper); box-shadow:0 6px 32px rgba(0,0,0,0.05); }
-.proj-card:hover::after { transform:scaleX(1); }
-.proj-card:hover .pc-arrow { transform:translate(3px,-3px); color:var(--amber); }
-.pc-num {
-  font-family:'IBM Plex Mono', monospace;
-  font-size:0.6rem; letter-spacing:0.18em;
-  color:var(--ink3); margin-bottom:1.5rem;
-}
-.pc-name {
-  font-family:'Playfair Display', serif;
-  font-size:1.35rem; font-weight:400; line-height:1.15;
-  color:var(--ink); margin-bottom:0.4rem;
-}
-.pc-sub {
-  font-family:'IBM Plex Mono', monospace;
-  font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--amber); margin-bottom:1.2rem;
-}
-.pc-body {
-  font-size:0.85rem; line-height:1.8; color:var(--ink2);
-  flex:1; margin-bottom:1.5rem;
-}
-.pc-tags { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:1.5rem; }
-.pc-arrow {
-  font-family:'IBM Plex Mono', monospace;
-  font-size:0.62rem; color:var(--ink3);
-  transition:transform 0.25s, color 0.25s;
-  display:inline-block; align-self:flex-start;
+.projects-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
+.carousel-item {
+  flex: 0 0 88%;
+  scroll-snap-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (min-width: 900px) {
+  .carousel-item {
+    flex: 0 0 45%;
+  }
+}
+
+.carousel-item .proj-featured, 
+.carousel-item .proj-card {
+  height: 100%;
+  width: 100%;
+  margin-bottom: 0;
+}
 /* ── SKILLS ── */
 .skills-grid {
   display:grid; grid-template-columns:repeat(3,1fr); gap:3rem;
@@ -650,92 +561,93 @@ footer span {
 </div>
 
 <!-- PROJECTS -->
-<div class="section" id="projects">
+  
+<section id="projects" class="section">
   <div class="inner">
     <div class="sec-hd">
-      <div class="sec-idx">02 — Projects</div>
-      <h2>Built things.<br><em>Real things.</em></h2>
+      <div class="sec-idx">02 / Portfolio</div>
+      <h2>Selected <em>Systems</em></h2>
     </div>
 
-    <a class="proj-featured" href="https://github.com/neet813/Inventory-SQL" target="_blank">
-      <div class="pf-left">
-        <div>
-          <div class="pf-num">01 / Inventory Optimisation SQL</div>
-          <div class="pf-name">Inventory<br>Optimisation</div>
-          <div class="pf-sub">Stock Rebalancing &amp; Analytics</div>
-          <p class="pf-body">SQL-driven analysis of multi-warehouse inventory. Turns days of manual work into a 3-second automated report. Identifies exactly where stock is excess, where it's short, and what rebalancing would save.</p>
-        </div>
-        <div class="pf-tags">
-          <span class="ptag">Python</span><span class="ptag">SQLite</span>
-          <span class="ptag">pandas</span><span class="ptag">numpy</span><span class="ptag">Google Colab</span>
-        </div>
-      </div>
-      <div class="pf-right">
-        <div>
-          <div class="pf-stat-label">Overstock identified</div>
-          <div class="pf-stat-val">£340k+</div>
-          <div class="pf-stat-label" style="margin-top:1.5rem;">Time to generate report</div>
-          <div class="pf-stat-val">3s</div>
-          <p class="pf-stat-desc">What used to take days of manual checking now runs automatically. The numbers don't lie.</p>
-        </div>
-        <div class="pf-arrow">View on GitHub ↗</div>
-      </div>
-    </a>
-
-    <div class="proj-pair">
-      <a class="proj-card" href="https://github.com/neet813/SmartOps-Task-Platform" target="_blank">
-        <div class="pc-num">02 / SmartOps Task Intelligence</div>
-        <div class="pc-name">SmartOps Task<br>Intelligence</div>
-        <div class="pc-sub">Operations Automation Platform</div>
-        <p class="pc-body">Auto-scoring, priority escalation, and email alerts for operations tasks. Fully automated — zero tasks slip through the cracks, without anyone needing to manually check.</p>
-        <div class="pc-tags">
-          <span class="ptag">Python</span><span class="ptag">gspread</span>
-          <span class="ptag">Apps Script</span><span class="ptag">Gmail SMTP</span><span class="ptag">Looker Studio</span>
-        </div>
-        <span class="pc-arrow">View on GitHub ↗</span>
-      </a>
-
-      <a class="proj-card" href="https://github.com/neet813/Supply-Chain-Early-Warning" target="_blank">
-        <div class="pc-num">03 / Supply Chain Early Warning</div>
-        <div class="pc-name">Supply Chain<br>Early Warning</div>
-        <div class="pc-sub">Live Risk Intelligence · Runs Daily</div>
-        <p class="pc-body">Architected a risk-scoring engine to monitor 4 global shipping routes. Engineered the data orchestration using Python and GitHub Actions to automate daily intelligence reports.</p>
-        <div class="pc-tags">
-          <span class="ptag">Python</span><span class="ptag">GitHub Actions</span>
-          <span class="ptag">Google Sheets</span><span class="ptag">NOAA</span><span class="ptag">Pandas</span>
-        </div>
-        <span class="pc-arrow">View on GitHub ↗</span>
-      </a>
-
-
-<a class="proj-featured" href="https://github.com/neet813/amazon-ghost-delivery-analysis" target="_blank">
-  <div class="pf-left">
-    <div>
-      <div class="pf-num">04 / Amazon Ghost Delivery Risk Analysis</div>
-      <div class="pf-name">Ghost Delivery<br>Risk Analysis</div>
-      <div class="pf-sub">Identifying Revenue Leakage in Last-Mile Logistics</div>
-      <p class="pf-body">My order was marked delivered. It never arrived. So I investigated — analysing 43,739 real delivery records to surface ghost delivery patterns, score risk, and quantify the true cost of last-mile fraud.</p>
-    </div>
-    <div class="pf-tags">
-      <span class="ptag">Python</span>
-      <span class="ptag">pandas</span><span class="ptag">Looker Studio</span>
-    </div>
-  </div>
-  <div class="pf-right">
-    <div>
-      <div class="pf-stat-label">Total revenue at risk</div>
-      <div class="pf-stat-val">₹1.83Cr</div>
-      <div class="pf-stat-label" style="margin-top:1.5rem;">Suspicious deliveries</div>
-      <div class="pf-stat-val">632</div>
-      <p class="pf-stat-desc">Suspicious deliveries run 65% faster than normal — physically improbable. The data tells the story.</p>
-    </div>
-    <div class="pf-arrow">View on GitHub ↗</div>
-  </div>
-</a>
+    <div class="projects-container">
       
+      <div class="carousel-item">
+        <a href="https://github.com/neet813" target="_blank" class="proj-featured">
+          <div class="pf-left">
+            <div class="pf-num">01</div>
+            <h3 class="pf-name">Inventory<br>Optimisation SQL</h3>
+            <p class="pf-sub">Python · SQLite · Pandas</p>
+            <p class="pf-body">
+              SQL-driven analysis of multi-warehouse inventory. Turns days of manual work into a 3-second automated report. Identifies exactly where stock is excess or short.
+            </p>
+            <div class="pf-tags">
+              <span class="ptag">SQL</span>
+              <span class="ptag">Automation</span>
+              <span class="ptag">Inventory</span>
+            </div>
+            <span class="pf-arrow">View on GitHub ↗</span>
+          </div>
+          <div class="pf-right">
+            <div>
+              <div class="pf-stat-label">Overstock identified</div>
+              <div class="pf-stat-val">£340k+</div>
+              <p class="pf-stat-desc">Report generation reduced from days to just 3 seconds.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="carousel-item">
+        <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="pc-num">02</div>
+          <h3 class="pc-name">SmartOps Task Intelligence</h3>
+          <p class="pc-sub">Python · Apps Script · Looker Studio</p>
+          <p class="pc-body">
+            Operations automation platform with auto-scoring, priority escalation, and email alerts. Fully automated workflow management.
+          </p>
+          <div class="pc-tags">
+            <span class="ptag">Python</span>
+            <span class="ptag">Automation</span>
+          </div>
+          <span class="pc-arrow">View on GitHub ↗</span>
+        </a>
+      </div>
+
+      <div class="carousel-item">
+        <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="pc-num">03</div>
+          <h3 class="pc-name">Supply Chain Early Warning</h3>
+          <p class="pc-sub">Python · GitHub Actions · Pandas</p>
+          <p class="pc-body">
+            Risk-scoring engine monitoring 4 global shipping routes. Daily intelligence reports automated via data orchestration.
+          </p>
+          <div class="pc-tags">
+            <span class="ptag">Risk Intelligence</span>
+            <span class="ptag">Orchestration</span>
+          </div>
+          <span class="pc-arrow">View on GitHub ↗</span>
+        </a>
+      </div>
+
+      <div class="carousel-item">
+        <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="pc-num">04</div>
+          <h3 class="pc-name">Ghost Delivery Risk Analysis</h3>
+          <p class="pc-sub">Python · Pandas · Looker Studio</p>
+          <p class="pc-body">
+            Analysing 43,739 delivery records to surface fraud patterns and quantify revenue leakage in last-mile logistics.
+          </p>
+          <div class="pc-tags">
+            <span class="ptag">Logistics</span>
+            <span class="ptag">Fraud Detection</span>
+          </div>
+          <span class="pc-arrow">View on GitHub ↗</span>
+        </a>
+      </div>
+
     </div>
-  </div>
-</div>
+    </div>
+</section>
 
 <!-- SKILLS -->
 <div class="section" id="skills">
