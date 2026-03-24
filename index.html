@@ -323,107 +323,97 @@ h2 em { font-style:italic; }
 .stag:hover { border-color:var(--amber); color:var(--amber); background:var(--amber3); }
 
 /* ── PROJECTS ── */
-
-
-  /* ── THE UPDATED PROJECTS GALLERY (WHITE & CLEAN) ── */
+/* ── THE WHITE GALLERY (HORIZONTAL) ── */
 
 #projects {
-  background: #000000; /* Pure black section */
+  background: #000000; /* Pure Black Section */
   padding: 100px 0;
+  color: #ffffff;
 }
 
-/* Fix for the container layout */
 .projects-container {
   display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 24px;
+  padding: 40px 0;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.projects-container::-webkit-scrollbar { display: none; } /* Hide scrollbar for Chrome/Safari */
+
+.carousel-item {
+  flex: 0 0 420px; /* Width of each project 'clip' */
+  scroll-snap-align: start;
+}
+
+.proj-card {
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 40px 30px;
+  height: 480px;
+  display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-/* Featured & Standard Card Unified Styling */
-.proj-featured, .proj-card {
-  background: #000000 !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  color: #ffffff !important;
-  transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
+  transition: all 0.4s ease;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.proj-featured::before, .proj-card::after {
-  background: #ffffff !important; /* White accent line */
+/* Hover: White Glow & Underline */
+.carousel-item:hover .proj-card {
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-8px);
 }
 
-/* Card Hover Effects */
-.proj-featured:hover, .proj-card:hover {
-  background: #0a0a0a !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
-}
-
-.proj-featured:hover .pf-name, .proj-card:hover .pc-name {
+.carousel-item:hover .pc-name {
+  color: #ffffff !important;
   text-decoration: underline;
   text-decoration-color: #ffffff;
   text-underline-offset: 8px;
 }
 
-/* Typography and Spacing Fix */
-.pf-name, .pc-name {
+/* Typography & Spacing Fixes */
+.pc-name {
   color: #ffffff !important;
-  font-family: 'Playfair Display', serif;
+  font-size: 26px !important;
+  margin-bottom: 12px;
 }
 
-.pf-body, .pc-body {
-  color: #999 !important; /* Subtle white for description */
-  flex: 0 1 auto !important; /* Removes the "weird" vertical space */
-  margin-bottom: 1.5rem !important;
+.pc-body {
+  color: #999 !important;
+  font-size: 14.5px;
   line-height: 1.6;
+  flex: 0 1 auto !important; /* FIXES THE DEAD SPACE */
+  margin-bottom: 24px !important;
 }
 
-/* The White Tags */
-.pc-tags, .pf-tags {
+/* White Tag Styling */
+.pc-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: auto;
+  margin-top: auto; /* Pushes tags to the bottom */
 }
 
 .ptag {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
-  text-transform: uppercase;
-  color: #ffffff !important;
-  background: transparent !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 4px 10px;
+  text-transform: uppercase;
   border-radius: 2px;
-  transition: 0.3s;
 }
 
-.ptag:hover {
-  background: #ffffff !important;
-  color: #000000 !important;
-}
-
-/* Status Badges */
-.status-badge, .pf-sub, .pc-sub {
-  color: #ffffff !important;
+.status-badge {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  display: inline-block;
-  opacity: 0.8;
+  color: #ffffff;
+  opacity: 0.5;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
 }
-
-/* Featured Section Adjustments */
-.pf-right {
-  background: #050505 !important; /* Slightly lighter black for contrast */
-}
-.pf-stat-val {
-  color: #ffffff !important;
-}
-  
 
 /* ── SKILLS ── */
 .skills-grid {
@@ -629,65 +619,59 @@ footer span {
 <section id="projects">
   <div class="inner">
     <div class="sec-hd">
-      <div class="sec-idx">02 — THE GALLERY</div>
-      <h2>Selected <em>Systems</em></h2>
+      <div class="sec-idx" style="color:white !important;">02 — THE GALLERY</div>
+      <h2 style="color:white !important;">Selected <em>Systems</em></h2>
     </div>
 
     <div class="projects-container">
-      <a href="https://github.com/neet813" target="_blank" class="proj-featured">
-        <div class="pf-left">
-          <div class="pf-num">PROJECT // 01</div>
-          <h3 class="pf-name">Inventory Rebalancing Engine</h3>
-          <p class="pf-body">Turning multi-warehouse chaos into automated intelligence. Designed to detect stock imbalances across global hubs and suggest transfers before stockouts occur.</p>
-          <div class="pf-tags">
-            <span class="ptag">SQL</span><span class="ptag">Python</span><span class="ptag">Pandas</span>
-          </div>
-          <span class="pf-arrow">VIEW REPOSITORY ↗</span>
-        </div>
-        <div class="pf-right">
-          <div class="pf-stat">
-            <div class="pf-stat-label">Identified Leakage</div>
-            <div class="pf-stat-val">£340K</div>
-            <p class="pf-stat-desc">Calculated potential savings by optimizing inter-warehouse transfers.</p>
-          </div>
-        </div>
-      </a>
-
-      <div class="proj-pair">
+      
+      <div class="carousel-item">
         <a href="https://github.com/neet813" target="_blank" class="proj-card">
-          <div class="pc-num">PROJECT // 02</div>
-          <h3 class="pc-name">SmartOps Task Intelligence</h3>
-          <p class="pc-body">Zero-leakage workflow orchestration. Automated priority escalation for logistics operations to ensure SLA compliance.</p>
+          <div class="status-badge">01 // OPTIMISATION</div>
+          <h3 class="pc-name">Inventory Rebalancing Engine</h3>
+          <p class="pc-body">Turning multi-warehouse chaos into 3-second automated intelligence. Identifies exact stock rebalancing needs to save £340k in identified leakage.</p>
           <div class="pc-tags">
-            <span class="ptag">Apps Script</span><span class="ptag">Automation</span>
+            <span class="ptag">SQL</span><span class="ptag">Python</span><span class="ptag">SQLite</span>
           </div>
-          <span class="pc-arrow">DETAILS ↗</span>
-        </a>
-
-        <a href="https://github.com/neet813" target="_blank" class="proj-card">
-          <div class="pc-num">PROJECT // 03</div>
-          <h3 class="pc-name">Supply Chain Early Warning</h3>
-          <p class="pc-body">Real-time risk scoring for global shipping routes using external APIs and GitHub Actions for automated daily reports.</p>
-          <div class="pc-tags">
-            <span class="ptag">GitHub Actions</span><span class="ptag">APIs</span>
-          </div>
-          <span class="pc-arrow">DETAILS ↗</span>
         </a>
       </div>
 
-      <a href="https://github.com/neet813" target="_blank" class="proj-card" style="margin-top: 1.2rem;">
-        <div class="pc-num">PROJECT // 04</div>
-        <h3 class="pc-name">Ghost Delivery Analysis</h3>
-        <p class="pc-body">Investigating 43k+ delivery records using forensic data techniques to expose last-mile fraud patterns and revenue leakage in high-density urban routes.</p>
-        <div class="pc-tags">
-          <span class="ptag">Data Forensics</span><span class="ptag">Python</span><span class="ptag">Visualization</span>
-        </div>
-        <span class="pc-arrow">CASE STUDY ↗</span>
-      </a>
+      <div class="carousel-item">
+        <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="status-badge">02 // OPS</div>
+          <h3 class="pc-name">SmartOps Task Intelligence</h3>
+          <p class="pc-body">Zero-leakage workflow orchestration. Auto-scoring, priority escalation, and email alerts for global operations without manual checking.</p>
+          <div class="pc-tags">
+            <span class="ptag">Apps Script</span><span class="ptag">Automation</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="carousel-item">
+        <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="status-badge">03 // RISK</div>
+          <h3 class="pc-name">Supply Chain Early Warning</h3>
+          <p class="pc-body">Live risk intelligence monitoring 4 global shipping routes. Engineered data orchestration using Python and GitHub Actions for daily reports.</p>
+          <div class="pc-tags">
+            <span class="ptag">GitHub Actions</span><span class="ptag">Pandas</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="carousel-item">
+        <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="status-badge">04 // FORENSICS</div>
+          <h3 class="pc-name">Ghost Delivery Risk Analysis</h3>
+          <p class="pc-body">Performing data forensics on 43,739 delivery records to surface physical impossibilities and quantify ₹1.83Cr in last-mile revenue leakage.</p>
+          <div class="pc-tags">
+            <span class="ptag">Python</span><span class="ptag">Forensics</span><span class="ptag">Looker</span>
+          </div>
+        </a>
+      </div>
+
     </div>
   </div>
 </section>
-  
   
 <!-- SKILLS -->
 <div class="section" id="skills">
@@ -738,7 +722,7 @@ footer span {
     <div class="contact-grid">
       <div class="avail"><div class="avail-dot"></div>Available now</div>
       <div>
-        <p class="contact-note">Looking for Data Analyst and Supply Chain Analytics roles. Open to relocate to the Netherlands or Singapore. If you've got messy data that needs taming — let's talk.</p>
+        <p class="contact-note">Looking for Data Analyst and Supply Chain Analytics roles. Open to relocate. If you've got messy data that needs taming — let's talk.</p>
         <div class="clinks">
           <a href="https://linkedin.com/in/navneet-kaur-analyst" target="_blank" class="cl">
             <span>linkedin.com/in/navneet-kaur-analyst</span><span class="cl-arr">↗</span>
