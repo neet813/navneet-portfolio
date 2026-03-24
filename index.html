@@ -325,6 +325,40 @@ h2 em { font-style:italic; }
 /* ── PROJECTS ── */
 /* ── THE WHITE GALLERY (HORIZONTAL) ── */
 
+/* ── PROJECTS HEADER STYLING ── */
+
+.projects-header {
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.header-label {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: #666; /* Dimmed white/grey */
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: #ffffff !important;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.header-line {
+  width: 60px;
+  height: 2px;
+  background: #ffffff;
+  margin-top: 15px;
+  opacity: 0.3;
+}
+  
 #projects {
   background: #000000; /* Pure Black Section */
   padding: 100px 0;
@@ -616,7 +650,21 @@ footer span {
 
 <!-- PROJECTS -->
 
-<h2>Projects</h2>
+<section id="projects">
+  <div class="inner">
+    
+    <div class="projects-header">
+       <span class="header-label">SELECTED WORK</span>
+       <h2 class="header-title">PROJECTS</h2>
+       <div class="header-line"></div>
+    </div>
+
+    <div class="projects-container">
+       ...
+    </div>
+
+  </div>
+</section>
 
 <div class="projects-container">
   
