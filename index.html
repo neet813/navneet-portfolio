@@ -323,44 +323,124 @@ h2 em { font-style:italic; }
 .stag:hover { border-color:var(--amber); color:var(--amber); background:var(--amber3); }
 
 /* ── PROJECTS ── */
-/* ── UPDATED PROJECTS CAROUSEL ── */
+
+/* ── THEME & UTILITIES ── */
+:root {
+  --theater-bg: #121214;  /* Deep charcoal/black */
+  --film-frame: #1e1e21; /* Slightly lighter for the frame */
+  --ink1: #e0e0e0;      /* Lighter text for contrast */
+  --amber: #c07830;     /* Keeps your amber accent */
+  --rule: #3a3a3d;      /* Darker borders */
+}
+
+/* Adjust overall section background for theater feel */
+#projects {
+  background-color: var(--theater-bg);
+  padding: 6rem 0;
+}
+
+.sec-idx, h2 {
+  color: var(--ink1); /* White text for section headers */
+}
+
+/* ── CINEMATIC PROJECTS CAROUSEL ── */
+
 .projects-container {
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  gap: 1.5rem;
+  gap: 3rem; /* wider gap for film separation */
   padding: 1rem 0 3rem 0;
   -webkit-overflow-scrolling: touch;
 }
 
 /* Hide scrollbar */
-.projects-container::-webkit-scrollbar {
-  display: none;
-}
-.projects-container {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+.projects-container::-webkit-scrollbar { display: none; }
+.projects-container { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* The Film Strip (Project Item) */
 .carousel-item {
-  flex: 0 0 88%;
+  flex: 0 0 85%;
   scroll-snap-align: center;
   text-decoration: none;
   color: inherit;
+  transition: transform 0.5s ease;
+  position: relative; /* for sprocket holes */
 }
 
+/* Sprocket Holes (Top and Bottom) */
+.carousel-item::before, .carousel-item::after {
+  content: '';
+  position: absolute;
+  left: 1.5rem; /* spacing from edge */
+  right: 1.5rem;
+  height: 0.8rem; /* hole height */
+  background-image: linear-gradient(to right, transparent 50%, #121214 50%); /* hole pattern */
+  background-size: 1.5rem 100%; /* hole spacing */
+  opacity: 0.6;
+}
+.carousel-item::before { top: 1.5rem; } /* holes on top */
+.carousel-item::after { bottom: 1.5rem; } /* holes on bottom */
+
+/* Mobile scaling: cards slightly zoomed out by default */
+@media (max-width: 899px) {
+  .carousel-item { transform: scale(0.95); }
+}
+
+/* Desktop: cards are 100% size, showing ~2 */
 @media (min-width: 900px) {
-  .carousel-item {
-    flex: 0 0 45%;
-  }
+  .carousel-item { flex: 0 0 48%; }
 }
 
-.carousel-item .proj-featured, 
-.carousel-item .proj-card {
+/* The Movie Scene (Project Card Styling) */
+.carousel-item .proj-card, 
+.carousel-item .proj-featured {
+  background: var(--film-frame);
+  border: 4px solid #000; /* Black outer frame */
+  border-radius: 4px; /* classic film frame is sharp */
+  padding: 4rem 3rem; /* extra padding to create the 'screen' */
   height: 100%;
-  width: 100%;
   margin-bottom: 0;
+  color: var(--ink1); /* Ensure internal text is white */
+  
+  /* Classic Film Textures & Vignette */
+  background-image: 
+    radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.5) 100%), /* vignette */
+    url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>'); /* grain */
+  background-blend-mode: overlay, screen;
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
+
+/* Hover/Active: 'The Projector Lights Up' */
+.carousel-item:hover .proj-card, 
+.carousel-item:hover .proj-featured,
+.carousel-item:active .proj-card, 
+.carousel-item:active .proj-featured {
+  border-color: var(--amber); /* frame turns amber */
+  transform: scale(1.02); /* card expands slightly */
+  box-shadow: 0 0 50px rgba(192, 120, 48, 0.25); /* amber glow */
+  
+  /* Brighten the scene content on hover */
+  background-blend-mode: color-burn, screen;
+  background-image: 
+    radial-gradient(ellipse at center, transparent 10%, rgba(0,0,0,0.3) 100%), 
+    url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+}
+
+/* Stylized Status Badge */
+.status-badge {
+  color: var(--amber);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border: 1px solid var(--amber);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+
+  
 /* ── SKILLS ── */
 .skills-grid {
   display:grid; grid-template-columns:repeat(3,1fr); gap:3rem;
@@ -565,8 +645,9 @@ footer span {
 <section id="projects" class="section">
   <div class="inner">
     <div class="sec-hd">
-      <div class="sec-idx">02 / Portfolio</div>
+      <div class="sec-idx">02 — CINEMA</div>
       <h2>Selected <em>Systems</em></h2>
+      <p style="margin-top: 10px; color: var(--ink3);">Engineering data into operational intelligence.</p>
     </div>
 
     <div class="projects-container">
@@ -574,24 +655,19 @@ footer span {
       <div class="carousel-item">
         <a href="https://github.com/neet813" target="_blank" class="proj-featured">
           <div class="pf-left">
-            <div class="pf-num">01</div>
+            <div class="status-badge">AUTO // ACTIVE</div>
             <h3 class="pf-name">Inventory<br>Optimisation SQL</h3>
-            <p class="pf-sub">Python · SQLite · Pandas</p>
             <p class="pf-body">
-              SQL-driven analysis of multi-warehouse inventory. Turns days of manual work into a 3-second automated report. Identifies exactly where stock is excess or short.
+              Turns manual multi-warehouse chaos into a 3-second automated report. Real-time stock rebalancing.
             </p>
             <div class="pf-tags">
-              <span class="ptag">SQL</span>
-              <span class="ptag">Automation</span>
-              <span class="ptag">Inventory</span>
+              <span class="ptag">SQL</span><span class="ptag">Automation</span>
             </div>
-            <span class="pf-arrow">View on GitHub ↗</span>
           </div>
           <div class="pf-right">
             <div>
-              <div class="pf-stat-label">Overstock identified</div>
               <div class="pf-stat-val">£340k+</div>
-              <p class="pf-stat-desc">Report generation reduced from days to just 3 seconds.</p>
+              <div class="pf-stat-label">OVERSTOCK IDENTIFIED</div>
             </div>
           </div>
         </a>
@@ -599,56 +675,40 @@ footer span {
 
       <div class="carousel-item">
         <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="status-badge">LIVE // SMART-OPS</div>
           <div class="pc-num">02</div>
-          <h3 class="pc-name">SmartOps Task Intelligence</h3>
-          <p class="pc-sub">Python · Apps Script · Looker Studio</p>
-          <p class="pc-body">
-            Operations automation platform with auto-scoring, priority escalation, and email alerts. Fully automated workflow management.
-          </p>
-          <div class="pc-tags">
-            <span class="ptag">Python</span>
-            <span class="ptag">Automation</span>
-          </div>
-          <span class="pc-arrow">View on GitHub ↗</span>
+          <h3 class="pc-name">SmartOps Intelligence</h3>
+          <p class="pc-body">Zero-leakage task orchestration. Auto-scoring, priorities, and escalation for global ops.</p>
+          <div class="pc-tags"><span class="ptag">gspread</span><span class="ptag">Workflow</span></div>
         </a>
       </div>
 
       <div class="carousel-item">
         <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="status-badge" style="color: #999; border-color: #999;">MONITORING // RISK</div>
           <div class="pc-num">03</div>
-          <h3 class="pc-name">Supply Chain Early Warning</h3>
-          <p class="pc-sub">Python · GitHub Actions · Pandas</p>
-          <p class="pc-body">
-            Risk-scoring engine monitoring 4 global shipping routes. Daily intelligence reports automated via data orchestration.
-          </p>
-          <div class="pc-tags">
-            <span class="ptag">Risk Intelligence</span>
-            <span class="ptag">Orchestration</span>
-          </div>
-          <span class="pc-arrow">View on GitHub ↗</span>
+          <h3 class="pc-name">Early Warning Hub</h3>
+          <p class="pc-body">Risk-scoring engine monitoring 4 global shipping routes with automated daily alerts.</p>
+          <div class="pc-tags"><span class="ptag">NOAA</span><span class="ptag">Orchestration</span></div>
         </a>
       </div>
 
       <div class="carousel-item">
         <a href="https://github.com/neet813" target="_blank" class="proj-card">
+          <div class="status-badge">FORENSICS // LIVE</div>
           <div class="pc-num">04</div>
-          <h3 class="pc-name">Ghost Delivery Risk Analysis</h3>
-          <p class="pc-sub">Python · Pandas · Looker Studio</p>
-          <p class="pc-body">
-            Analysing 43,739 delivery records to surface fraud patterns and quantify revenue leakage in last-mile logistics.
-          </p>
-          <div class="pc-tags">
-            <span class="ptag">Logistics</span>
-            <span class="ptag">Fraud Detection</span>
-          </div>
-          <span class="pc-arrow">View on GitHub ↗</span>
+          <h3 class="pc-name">Ghost Delivery Risk</h3>
+          <p class="pc-body">Analyzing 43k+ delivery records to expose last-mile fraud and quantify revenue leakage.</p>
+          <div class="pc-tags"><span class="ptag">Pandas</span><span class="ptag">Investigation</span></div>
         </a>
       </div>
 
     </div>
-    </div>
+  </div>
 </section>
 
+  
+  
 <!-- SKILLS -->
 <div class="section" id="skills">
   <div class="inner">
