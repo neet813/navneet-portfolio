@@ -72,23 +72,68 @@
       text-transform: uppercase;
       color: var(--text-mid);
       text-decoration: none;
-      transition: color 0.2s;
+      padding: 6px 14px;
+      border-radius: 100px;
+      position: relative;
+      transition: color 0.25s, background 0.25s, box-shadow 0.25s;
     }
-    .nav-links a:hover { color: var(--text-dark); }
+    .nav-links a:hover {
+      color: #fff;
+      background: #7B5EA7;
+      box-shadow: 0 4px 18px rgba(123,94,167,0.35);
+    }
+    .nav-links a:active,
+    .nav-links a.active {
+      color: #fff;
+      background: #5E3F8F;
+      box-shadow: 0 4px 18px rgba(94,63,143,0.4);
+    }
 
     .nav-cta {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.04em;
-      color: var(--text-dark);
+      color: #fff;
       text-decoration: none;
-      border: 1.5px solid var(--text-dark);
-      padding: 8px 20px;
+      background: #5E3F8F;
+      padding: 10px 22px;
       border-radius: 100px;
-      transition: background 0.2s, color 0.2s;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 4px 20px rgba(94,63,143,0.4);
     }
-    .nav-cta:hover { background: var(--text-dark); color: var(--cream); }
+    .nav-cta::after {
+      content: ' ↗';
+      font-size: 12px;
+    }
+    .nav-cta:hover {
+      background: #7B5EA7;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(94,63,143,0.55);
+    }
+
+    .mode-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      padding: 9px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .mode-toggle:hover {
+      color: var(--text-dark);
+      background: var(--cream-dark);
+      border-color: #C9B8E8;
+    }
 
     .hamburger {
       display: none;
@@ -132,7 +177,7 @@
       color: var(--text-mid);
       text-decoration: none;
     }
-    .mobile-menu .nav-cta { align-self: flex-start; margin-top: 8px; }
+    .mobile-menu .nav-cta { align-self: flex-start; margin-top: 8px; color: var(--cream); }
 
     /* ─── HERO ─── */
     #hero {
@@ -220,36 +265,35 @@
     }
 
     .hero-stats {
-      display: flex;
-      gap: 28px;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 32px;
+      max-width: 340px;
     }
 
     .stat-block {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
     }
     .stat-number {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px;
+      font-size: 36px;
       font-weight: 700;
+      letter-spacing: -0.03em;
       color: var(--text-dark);
+      line-height: 1;
     }
     .stat-label {
       font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 400;
+      font-size: 10px;
+      font-weight: 500;
       color: var(--text-light);
-      letter-spacing: 0.03em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
-    .stat-divider {
-      width: 1px;
-      height: 36px;
-      background: var(--border);
-      align-self: center;
-    }
+    .stat-divider { display: none; }
 
     .hero-right {
       grid-column: 3;
@@ -388,7 +432,6 @@
       background: var(--border);
       margin-bottom: 20px;
     }
-
     .exp-bullets {
       list-style: none;
       display: flex;
@@ -418,18 +461,65 @@
     /* ─── PRODUCTS ─── */
     #products { background: var(--cream-dark); }
 
+    .products-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 32px;
+      cursor: pointer;
+      text-align: left;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .products-toggle:hover {
+      box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+      transform: translateY(-2px);
+    }
+    .products-toggle-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(24px, 3.2vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text-dark);
+    }
+    .products-chevron {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      color: var(--text-mid);
+      transition: transform 0.35s ease;
+    }
+    .products-toggle[aria-expanded="true"] .products-chevron { transform: rotate(180deg); }
+
+    .products-collapse {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.45s ease, margin-top 0.45s ease;
+      margin-top: 0;
+    }
+    .products-collapse.open { grid-template-rows: 1fr; margin-top: 32px; }
+    .products-collapse-inner { overflow: hidden; min-height: 0; }
+
     .products-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
+      align-items: start;
     }
 
     .product-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 24px;
+      border-radius: 28px;
       overflow: hidden;
       transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
     }
     .product-card:hover {
       transform: translateY(-6px);
@@ -438,10 +528,11 @@
 
     .product-img-wrap {
       width: 100%;
-      height: 220px;
+      height: 340px;
       background: linear-gradient(135deg, var(--mint-light), var(--lilac-light));
       position: relative;
       overflow: hidden;
+      flex-shrink: 0;
     }
     .product-img-wrap img {
       width: 100%;
@@ -463,31 +554,59 @@
       color: var(--text-light);
     }
 
-    .product-body { padding: 28px; }
+    .product-body {
+      padding: 24px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .product-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
 
     .product-name {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--text-dark);
-      margin-bottom: 8px;
+      line-height: 1.1;
     }
+
+    .product-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--cream);
+      background: var(--text-dark);
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .product-link:hover { background: #9B7FC7; }
 
     .product-desc {
       font-family: 'Inter', sans-serif;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 300;
       color: var(--text-mid);
       line-height: 1.6;
-      margin-bottom: 16px;
     }
 
     .tag-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 20px;
     }
     .tag {
       font-family: 'Space Grotesk', sans-serif;
@@ -500,21 +619,6 @@
       padding: 4px 12px;
       border-radius: 100px;
     }
-
-    .product-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-dark);
-      text-decoration: none;
-      border-bottom: 1.5px solid var(--text-dark);
-      padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .product-link:hover { color: #9B7FC7; border-color: #9B7FC7; }
 
     /* ─── PROJECTS ─── */
     #projects { background: var(--cream); }
@@ -576,12 +680,22 @@
       font-family: 'Space Grotesk', sans-serif;
       font-size: 12px;
       font-weight: 600;
-      color: var(--text-dark);
+      color: #3B9EFF;
       text-decoration: none;
       letter-spacing: 0.02em;
-      transition: color 0.2s;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid rgba(59,158,255,0.3);
+      background: rgba(59,158,255,0.06);
+      box-shadow: 0 0 10px rgba(59,158,255,0.15);
+      transition: color 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
     }
-    .project-link:hover { color: #9B7FC7; }
+    .project-link:hover {
+      color: #6CB8FF;
+      background: rgba(59,158,255,0.12);
+      border-color: rgba(59,158,255,0.55);
+      box-shadow: 0 0 18px rgba(59,158,255,0.4), 0 0 6px rgba(59,158,255,0.3);
+    }
     .project-link::after { content: ' →'; }
 
     /* ─── SKILLS ─── */
@@ -626,13 +740,108 @@
     }
     #contact .section-label { color: rgba(245,242,236,0.4); }
 
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    /* photo side */
+    .contact-photo-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-photo-blob {
+      position: absolute;
+      width: 220px;
+      height: 260px;
+      background: linear-gradient(135deg, rgba(168,216,200,0.25) 0%, rgba(201,184,232,0.25) 100%);
+      border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%;
+      animation: blobMorph 8s ease-in-out infinite;
+      filter: blur(2px);
+    }
+
+    .contact-photo-frame {
+      position: relative;
+      width: 220px;
+      height: 300px;
+      border-radius: 24px;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+      cursor: pointer;
+      background: #111;
+    }
+    .contact-photo-frame:hover {
+      transform: scale(1.03);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+    }
+    .contact-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    /* vignette overlay */
+    .contact-photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* bottom gradient + text */
+    .contact-photo-frame::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 55%;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .contact-photo-info {
+      position: absolute;
+      bottom: 18px;
+      left: 18px;
+      right: 18px;
+      z-index: 3;
+    }
+    .contact-photo-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 3px;
+      letter-spacing: -0.01em;
+    }
+    .contact-photo-info p {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.4;
+    }
+
+    /* text side */
+    .contact-text { display: flex; flex-direction: column; }
+
     .contact-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(42px, 6vw, 80px);
+      font-size: clamp(42px, 5vw, 72px);
       font-weight: 700;
       letter-spacing: -0.04em;
       line-height: 1;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       background: linear-gradient(135deg, var(--cream) 40%, var(--lilac) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -641,7 +850,7 @@
 
     .contact-sub {
       font-family: 'Inter', sans-serif;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 300;
       color: rgba(245,242,236,0.65);
       margin-bottom: 24px;
@@ -660,7 +869,8 @@
       border: 1px solid rgba(168,216,200,0.3);
       padding: 6px 14px;
       border-radius: 100px;
-      margin-bottom: 40px;
+      margin-bottom: 36px;
+      align-self: flex-start;
     }
     .available-dot {
       width: 7px;
@@ -677,7 +887,7 @@
     .contact-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 12px;
     }
 
     .contact-link {
@@ -697,6 +907,12 @@
     .contact-link:hover {
       background: rgba(245,242,236,0.08);
       border-color: rgba(245,242,236,0.45);
+    }
+
+    @media (max-width: 768px) {
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .contact-photo-frame { width: 220px; height: 270px; }
+      .contact-photo-blob { width: 240px; height: 280px; }
     }
 
     /* ─── FOOTER ─── */
@@ -747,28 +963,52 @@
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
 
-      section { padding: 64px 24px; }
+      section { padding: 56px 20px; }
       footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
 
+      /* hero */
       #hero {
         grid-template-columns: 1fr;
-        padding: 100px 24px 60px;
+        padding: 90px 20px 48px;
         min-height: auto;
       }
       .hero-rotated { display: none; }
       .hero-left { grid-column: 1; }
-      .hero-right { grid-column: 1; margin-top: 40px; order: -1; }
-      .portrait-wrap { width: 240px; height: 280px; }
-      .hero-hello { font-size: 72px; }
-      .hero-name { font-size: 32px; }
-      .hero-stats { gap: 16px; }
-      .stat-divider { display: none; }
-      .skills-grid { grid-template-columns: 1fr; }
+      .hero-right { grid-column: 1; margin-top: 32px; order: -1; }
+      .portrait-wrap { width: 200px; height: 240px; margin: 0 auto; }
+      .hero-hello { font-size: 64px; }
+      .hero-name { font-size: 28px; }
+      .hero-stats { grid-template-columns: 1fr 1fr; gap: 16px 24px; max-width: 100%; }
+      .stat-number { font-size: 28px; }
+
+      /* experience */
+      .exp-grid { grid-template-columns: 1fr; }
+      .exp-card { padding: 24px; }
+
+      /* projects */
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card { padding: 24px; }
+
+      /* products */
+      .products-grid { grid-template-columns: 1fr; }
+      .product-img-wrap { height: 260px; }
+
+      /* skills */
+      .skills-grid { grid-template-columns: 1fr; gap: 24px; }
+
+      /* contact */
+      .contact-inner { grid-template-columns: 1fr; gap: 36px; }
+      .contact-photo-wrap { justify-content: center; }
+      .contact-photo-frame { width: 180px; height: 220px; }
+      .contact-photo-blob { width: 200px; height: 240px; }
       .contact-links { flex-direction: column; }
+      .contact-link { justify-content: center; }
     }
 
     @media (max-width: 375px) {
-      .hero-hello { font-size: 60px; }
+      .hero-hello { font-size: 52px; }
+      .hero-name { font-size: 24px; }
+      section { padding: 48px 16px; }
     }
   </style>
 </head>
@@ -778,11 +1018,16 @@
 <nav id="navbar">
   <a href="#hero" class="nav-logo">NK</a>
   <ul class="nav-links">
-    <li><a href="#experience">About</a></li>
-    <li><a href="#products">Works</a></li>
-    <li><a href="#projects">Process</a></li>
+    <li><a href="#hero">About</a></li>
+    <li><a href="#experience">Works</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#products">Built</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <a href="creative.html" class="mode-toggle" title="Switch to Creative portfolio">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>
+    Creative
+  </a>
   <a href="#contact" class="nav-cta">Let's Talk</a>
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -790,10 +1035,12 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#experience" onclick="closeMobile()">About</a>
-  <a href="#products" onclick="closeMobile()">Works</a>
-  <a href="#projects" onclick="closeMobile()">Process</a>
+  <a href="#hero" onclick="closeMobile()">About</a>
+  <a href="#experience" onclick="closeMobile()">Works</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#products" onclick="closeMobile()">Built</a>
   <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="creative.html" class="nav-cta" onclick="closeMobile()">Switch to Creative</a>
   <a href="#contact" class="nav-cta" onclick="closeMobile()">Let's Talk</a>
 </div>
 
@@ -810,15 +1057,17 @@
         <span class="stat-number">2</span>
         <span class="stat-label">Products shipped</span>
       </div>
-      <div class="stat-divider"></div>
       <div class="stat-block">
         <span class="stat-number">43k+</span>
         <span class="stat-label">Records analysed</span>
       </div>
-      <div class="stat-divider"></div>
       <div class="stat-block">
         <span class="stat-number">#2</span>
         <span class="stat-label">on r/ESPHome</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number">1</span>
+        <span class="stat-label">Hardware product shipped</span>
       </div>
     </div>
   </div>
@@ -835,6 +1084,7 @@
 <section id="experience">
   <p class="section-label fade-up">Experience</p>
   <h2 class="section-title fade-up">Where I've worked</h2>
+
   <div class="exp-grid">
     <div class="exp-card fade-up">
       <div class="exp-company">Numerator</div>
@@ -842,15 +1092,15 @@
       <span class="exp-dates">April 2026 – Present</span>
       <div class="exp-divider"></div>
       <ul class="exp-bullets">
-        <li>Supporting UK grocery retail teams with Worldpanel and PowerView consumer panel data.</li>
-        <li>Working across Aldi and M&amp;S category performance analysis.</li>
-        <li>Translating complex panel data into clear retail insights for client stakeholders.</li>
+        <li>Delivering daily sales and retailer market share reports ahead of deadline for UK grocery clients across dairy and produce categories.</li>
+        <li>Running full brand studies — what to sell, where, to whom — giving clients fast, clear answers on commercial decisions.</li>
+        <li>Independently diagnosed and fixed broken Excel dashboards and Worldpanel reports; always validated fixes with the manager before redelivery.</li>
       </ul>
     </div>
     <div class="exp-card fade-up">
       <div class="exp-company">Wickes UK</div>
       <div class="exp-role">Data &amp; Reporting Analyst</div>
-      <span class="exp-dates">Jun 2025 – Jan 2026</span>
+      <span class="exp-dates">Jun 2025 – Jan 2026 · Contract</span>
       <div class="exp-divider"></div>
       <ul class="exp-bullets">
         <li>Built automated reporting pipelines, reducing turnaround from days to seconds.</li>
@@ -858,45 +1108,6 @@
         <li>Maintained Looker Studio and Power BI dashboards for operational teams.</li>
         <li>Automated workflows with Google Apps Script across supply chain ops.</li>
       </ul>
-    </div>
-  </div>
-</section>
-
-<!-- PRODUCTS -->
-<section id="products">
-  <p class="section-label fade-up">Products I've Shipped</p>
-  <h2 class="section-title fade-up">Built from scratch,<br>shipped to real users</h2>
-  <div class="products-grid">
-    <div class="product-card fade-up">
-      <div class="product-img-wrap">
-        <img src="Home Page.png" alt="Nebula app screenshot" />
-      </div>
-      <div class="product-body">
-        <div class="product-name">Nebula</div>
-        <p class="product-desc">AI goal-tracking app with a cosmic theme. Nova, your AI companion, helps you break down goals and stay on track — freemium model, deployed and live.</p>
-        <div class="tag-row">
-          <span class="tag">Groq</span>
-          <span class="tag">Supabase</span>
-          <span class="tag">Vercel</span>
-        </div>
-        <a href="https://universe-goals.vercel.app" target="_blank" rel="noopener" class="product-link">Live site</a>
-      </div>
-    </div>
-    <div class="product-card fade-up">
-      <div class="product-img-wrap">
-        <img src="OLED.png" alt="Freezer Robot OLED display" />
-      </div>
-      <div class="product-body">
-        <div class="product-name">Freezer Robot</div>
-        <p class="product-desc">ESP32 hardware fridge tracker with magnetic mount and OLED display. Offline-first, no cloud dependency. Hit #2 on r/ESPHome.</p>
-        <div class="tag-row">
-          <span class="tag">ESP32</span>
-          <span class="tag">ESPHome</span>
-          <span class="tag">Hardware</span>
-          <span class="tag">Offline-first</span>
-        </div>
-        <a href="https://github.com/neet813/freezer-robot" target="_blank" rel="noopener" class="product-link">GitHub</a>
-      </div>
     </div>
   </div>
 </section>
@@ -961,6 +1172,56 @@
   </div>
 </section>
 
+<!-- PRODUCTS -->
+<section id="products">
+  <p class="section-label fade-up">Products I've Shipped</p>
+  <button class="products-toggle fade-up" id="productsToggle" aria-expanded="false" aria-controls="productsCollapse">
+    <span class="products-toggle-text">Built from scratch,<br>live on the internet</span>
+    <svg class="products-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+  </button>
+  <div class="products-collapse" id="productsCollapse">
+  <div class="products-collapse-inner">
+  <div class="products-grid">
+    <div class="product-card fade-up">
+      <div class="product-img-wrap">
+        <img src="Home Page.png" alt="Nebula app screenshot" />
+      </div>
+      <div class="product-body">
+        <div class="product-header">
+          <div class="product-name">Nebula</div>
+          <a href="https://universe-goals.vercel.app" target="_blank" rel="noopener" class="product-link">Live site ↗</a>
+        </div>
+        <p class="product-desc">AI goal-tracking app with a cosmic theme. Nova, your AI companion, helps you break down goals and stay on track — freemium model, deployed and live.</p>
+        <div class="tag-row">
+          <span class="tag">Groq</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">Vercel</span>
+        </div>
+      </div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img-wrap">
+        <img src="OLED.png" alt="Freezer Robot OLED display" />
+      </div>
+      <div class="product-body">
+        <div class="product-header">
+          <div class="product-name">Freezer Robot</div>
+          <a href="https://github.com/neet813/freezer-robot" target="_blank" rel="noopener" class="product-link">GitHub ↗</a>
+        </div>
+        <p class="product-desc">ESP32 hardware fridge tracker with magnetic mount and OLED display. Offline-first, no cloud dependency. Hit #2 on r/ESPHome.</p>
+        <div class="tag-row">
+          <span class="tag">ESP32</span>
+          <span class="tag">ESPHome</span>
+          <span class="tag">Hardware</span>
+          <span class="tag">Offline-first</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+</section>
+
 <!-- SKILLS -->
 <section id="skills">
   <p class="section-label fade-up">Skills</p>
@@ -1000,26 +1261,42 @@
 
 <!-- CONTACT -->
 <section id="contact">
-  <p class="section-label fade-up">Contact</p>
-  <h2 class="contact-title fade-up">Let's talk.</h2>
-  <p class="contact-sub fade-up">Looking for Data Analyst and Supply Chain Analytics roles.<br>Open to relocate.</p>
-  <div class="available-badge fade-up">
-    <span class="available-dot"></span>
-    Available now
-  </div>
-  <div class="contact-links fade-up">
-    <a href="https://linkedin.com/in/navneet-kaur-analyst" target="_blank" rel="noopener" class="contact-link">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-      LinkedIn
-    </a>
-    <a href="https://github.com/neet813" target="_blank" rel="noopener" class="contact-link">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-      GitHub
-    </a>
-    <a href="mailto:navneetkr1908@gmail.com" class="contact-link">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-      Email
-    </a>
+  <div class="contact-inner">
+    <!-- LEFT: photo -->
+    <div class="contact-photo-wrap fade-up">
+      <div class="contact-photo-blob"></div>
+      <div class="contact-photo-frame">
+        <img src="Photo.png" alt="Navneet Kaur" />
+        <div class="contact-photo-info">
+          <h3>Navneet Kaur</h3>
+          <p>Data Analyst · Open to work</p>
+        </div>
+      </div>
+    </div>
+    <!-- RIGHT: text -->
+    <div class="contact-text">
+      <p class="section-label fade-up">Contact</p>
+      <h2 class="contact-title fade-up">Let's talk.</h2>
+      <p class="contact-sub fade-up">Looking for Data Analyst roles in the Netherlands. Based in India · Open to relocation · Visa sponsorship required.</p>
+      <div class="available-badge fade-up">
+        <span class="available-dot"></span>
+        Available now
+      </div>
+      <div class="contact-links fade-up">
+        <a href="https://linkedin.com/in/navneet-kaur-analyst" target="_blank" rel="noopener" class="contact-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/neet813" target="_blank" rel="noopener" class="contact-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="mailto:navneetkr1908@gmail.com" class="contact-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          Email
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1046,6 +1323,31 @@
     mobileMenu.classList.remove('open');
   }
 
+  // Active nav on scroll
+  const sections = [
+    { id: 'experience', href: '#experience' },
+    { id: 'projects',   href: '#projects' },
+    { id: 'products',   href: '#products' },
+    { id: 'contact',    href: '#contact' },
+  ];
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const s = sections.find(s => s.id === entry.target.id);
+        const match = s ? document.querySelector(`.nav-links a[href="${s.href}"]`) : null;
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el) sectionObserver.observe(el);
+  });
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
@@ -1056,6 +1358,14 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ── PRODUCTS ACCORDION ──
+  const productsToggle = document.getElementById('productsToggle');
+  const productsCollapse = document.getElementById('productsCollapse');
+  productsToggle.addEventListener('click', () => {
+    const isOpen = productsCollapse.classList.toggle('open');
+    productsToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
 </script>
 </body>
 </html>

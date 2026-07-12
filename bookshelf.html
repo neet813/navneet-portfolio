@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navneet's Bookshelf</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F2EC;
+      --wood-dark: #7A4F2D;
+      --wood-mid:  #A0673A;
+      --wood-shelf: #B8864E;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px 80px;
+      overflow-x: hidden;
+    }
+
+    .shelf-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 40px;
+    }
+
+    /* ── SHELF UNIT ── */
+    .shelf-unit {
+      width: fit-content;
+      max-width: 680px;
+      background: #FAF7F2;
+      border: 3px solid var(--wood-dark);
+      border-radius: 6px;
+      padding: 0 20px;
+      position: relative;
+      box-shadow: 6px 10px 40px rgba(0,0,0,0.1);
+    }
+
+    /* legs */
+    .shelf-unit::before, .shelf-unit::after {
+      content: '';
+      position: absolute;
+      bottom: -38px;
+      width: 20px;
+      height: 38px;
+      background: var(--wood-dark);
+      border-radius: 0 0 8px 8px;
+    }
+    .shelf-unit::before { left: 52px; }
+    .shelf-unit::after  { right: 52px; }
+
+    /* side panels */
+    .shelf-side {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 14px;
+      background: var(--wood-mid);
+    }
+    .shelf-side.left  { left: -14px; border-radius: 6px 0 0 6px; }
+    .shelf-side.right { right: -14px; border-radius: 0 6px 6px 0; }
+
+    /* ── ROWS ── */
+    .shelf-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      padding: 16px 4px 0;
+      min-height: 120px;
+      position: relative;
+      border-bottom: 6px solid var(--wood-shelf);
+    }
+    .shelf-row:last-child {
+      border-bottom: none;
+      padding-bottom: 14px;
+    }
+    .shelf-row::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 0; right: 0;
+      height: 6px;
+      background: rgba(0,0,0,0.07);
+      filter: blur(3px);
+    }
+
+    .spacer { flex: 1; min-width: 8px; }
+
+    /* ── BOOKS ── */
+    .book {
+      border-radius: 2px 5px 5px 2px;
+      border-left: 5px solid rgba(0,0,0,0.18);
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: bottom center;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.3s ease,
+                  filter 0.3s ease;
+    }
+
+    /* random lean angles set via JS */
+    .book:hover {
+      transform: translateY(-16px) rotate(0deg) !important;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      filter: brightness(1.08);
+      z-index: 10;
+    }
+
+    .book-spine {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.9);
+      padding: 10px 0;
+      text-align: center;
+      user-select: none;
+    }
+
+    /* shimmer on hover */
+    .book::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%);
+      background-size: 200% 100%;
+      background-position: 200% 0;
+      border-radius: inherit;
+      transition: background-position 0.5s ease;
+      pointer-events: none;
+    }
+    .book:hover::after { background-position: -200% 0; }
+
+    /* individual book styles */
+    .b1  { background: #7B5EA7; width: 36px; height: 100px; }
+    .b2  { background: #3B9EFF; width: 30px; height: 88px; }
+    .b3  { background: #E07B54; width: 34px; height: 94px; }
+    .b4  { background: #4BAE8A; width: 32px; height: 102px; }
+    .b5  { background: #D4858A; width: 38px; height: 90px; }
+    .b6  { background: #E8B84B; width: 28px; height: 86px; }
+    .b7  { background: #1A1A2E; width: 40px; height: 108px; } /* Nebula */
+    .b8  { background: #1B4F72; width: 34px; height: 96px; } /* Freezer */
+
+    /* ── DECORATIONS ── */
+    .deco { flex-shrink: 0; display: flex; align-items: flex-end; }
+
+    /* floating animation for decos */
+    @keyframes floatA {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    @keyframes floatB {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-4px) rotate(1deg); }
+    }
+    @keyframes floatC {
+      0%, 100% { transform: translateY(0) rotate(1deg); }
+      50% { transform: translateY(-6px) rotate(-1deg); }
+    }
+
+    .deco-flower { animation: floatA 4s ease-in-out infinite; }
+    .deco-globe  { animation: floatB 5.5s ease-in-out infinite 0.8s; }
+    .deco-candle { animation: floatC 6s ease-in-out infinite 1.2s; }
+    .deco-frame  { animation: floatA 7s ease-in-out infinite 0.4s; }
+
+    @keyframes flicker {
+      0%,100% { transform: scaleX(1) rotate(-2deg); opacity:1; }
+      30%      { transform: scaleX(0.8) rotate(3deg);  opacity:0.85; }
+      60%      { transform: scaleX(1.1) rotate(-1deg); opacity:0.95; }
+    }
+    .flame { transform-origin: 50% 100%; animation: flicker 1.6s ease-in-out infinite; }
+
+    /* photo frame */
+    .photo-frame {
+      width: 54px;
+      height: 54px;
+      border: 3px solid var(--wood-dark);
+      border-radius: 4px;
+      background: linear-gradient(135deg, #C9B8E8 0%, #A8D8C8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 2px;
+      box-shadow: 2px 3px 10px rgba(0,0,0,0.12);
+    }
+
+    /* ── OPEN BOOK OVERLAY ── */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(20,14,10,0.65);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .overlay.open {
+      display: flex;
+      animation: fadeIn 0.25s ease forwards;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .open-book {
+      background: #FEFCF8;
+      width: 100%;
+      max-width: 680px;
+      max-height: 88vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-radius: 4px 18px 18px 4px;
+      box-shadow: 0 48px 120px rgba(0,0,0,0.45);
+      position: relative;
+      overflow: hidden;
+      animation: bookOpen 0.4s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+      transform-origin: left center;
+    }
+    @keyframes bookOpen {
+      from { opacity: 0; transform: perspective(800px) rotateY(-20deg) scale(0.92); }
+      to   { opacity: 1; transform: perspective(800px) rotateY(0deg) scale(1); }
+    }
+
+    /* spine line */
+    .open-book::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.03), rgba(0,0,0,0.08));
+      transform: translateX(-50%);
+      z-index: 5;
+    }
+
+    .page-left {
+      padding: 36px 32px 36px 36px;
+      background: #FEFCF8;
+      overflow-y: auto;
+      position: relative;
+    }
+    .page-right {
+      padding: 36px 36px 36px 32px;
+      background: #FBF8F2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+
+    /* subtle page texture lines */
+    .page-left::before, .page-right::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 6px;
+      background: linear-gradient(to right, rgba(0,0,0,0.04), transparent);
+      pointer-events: none;
+    }
+    .page-left::before { right: 0; }
+    .page-right::before { left: 0; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #aaa;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      margin-bottom: 28px;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: #555; }
+
+    .pg-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+
+    .pg-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #1A1A1A;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .pg-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      font-weight: 300;
+      color: #555;
+      line-height: 1.72;
+      margin-bottom: 20px;
+    }
+
+    .pg-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .pg-tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      color: #777;
+      background: #EDE9E1;
+      border-radius: 100px;
+      padding: 4px 11px;
+      letter-spacing: 0.04em;
+    }
+
+    .pg-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 64px;
+      font-weight: 700;
+      color: #EDE9E1;
+      letter-spacing: -0.06em;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .pg-right-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: #888;
+      line-height: 1.68;
+      flex: 1;
+      margin-bottom: 28px;
+    }
+
+    .pg-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      background: #1A1A1A;
+      text-decoration: none;
+      padding: 11px 22px;
+      border-radius: 100px;
+      transition: background 0.22s, transform 0.22s;
+      align-self: flex-start;
+    }
+    .pg-link:hover { background: #7B5EA7; transform: translateY(-2px); }
+
+    .close-x {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.06);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #888;
+      z-index: 20;
+      transition: background 0.2s, color 0.2s;
+    }
+    .close-x:hover { background: rgba(0,0,0,0.13); color: #333; }
+
+    /* responsive */
+    @media (max-width: 580px) {
+      .open-book {
+        grid-template-columns: 1fr;
+        border-radius: 12px;
+        max-height: 88vh;
+      }
+      .open-book::before { display: none; }
+      .page-right { border-top: 1px solid #EDE9E1; }
+      .pg-number { font-size: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+<p class="shelf-label">My Bookshelf</p>
+
+<div class="shelf-unit">
+  <div class="shelf-side left"></div>
+  <div class="shelf-side right"></div>
+
+  <!-- ROW 1: Inventory, SmartOps, deco, Supply Chain, Ghost Delivery -->
+  <div class="shelf-row">
+    <div class="book b1" data-book="0"><span class="book-spine">Inventory Engine</span></div>
+    <div class="book b2" data-book="1"><span class="book-spine">SmartOps</span></div>
+    <!-- candle -->
+    <div class="deco deco-candle" style="margin: 0 8px;">
+      <svg width="32" height="62" viewBox="0 0 32 62" fill="none">
+        <!-- flame -->
+        <g class="flame">
+          <ellipse cx="16" cy="8" rx="4" ry="6" fill="#F0B429"/>
+          <ellipse cx="16" cy="10" rx="2.5" ry="4" fill="#FDE68A"/>
+          <ellipse cx="16" cy="12" rx="1.2" ry="2" fill="#fff"/>
+        </g>
+        <!-- wick -->
+        <line x1="16" y1="14" x2="16" y2="18" stroke="#4A3728" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- wax drip left -->
+        <path d="M9 22 Q7 28 8 32" stroke="#E8C9A0" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <!-- candle body -->
+        <rect x="8" y="18" width="16" height="36" rx="3" fill="#FAF0DC"/>
+        <rect x="8" y="18" width="16" height="5" rx="3" fill="#F0D99A"/>
+        <!-- stripe decoration -->
+        <line x1="8" y1="30" x2="24" y2="30" stroke="#E8C9A0" stroke-width="1" opacity="0.6"/>
+        <line x1="8" y1="38" x2="24" y2="38" stroke="#E8C9A0" stroke-width="1" opacity="0.6"/>
+        <!-- base plate -->
+        <ellipse cx="16" cy="54" rx="10" ry="3" fill="#D4A96A"/>
+        <ellipse cx="16" cy="52" rx="10" ry="3" fill="#E8C07A"/>
+      </svg>
+    </div>
+    <div class="book b3" data-book="2"><span class="book-spine">Supply Chain</span></div>
+    <div class="book b4" data-book="3"><span class="book-spine">Ghost Delivery</span></div>
+  </div>
+
+  <!-- ROW 2: vase, Nebula, Freezer Robot, plant -->
+  <div class="shelf-row">
+    <!-- original flower in pot -->
+    <div class="deco deco-flower">
+      <svg width="52" height="72" viewBox="0 0 52 72" fill="none">
+        <!-- pot -->
+        <path d="M14 52 Q12 68 26 69 Q40 68 38 52 Z" fill="#C1714A"/>
+        <path d="M14 52 Q12 60 26 62 Q40 60 38 52 Z" fill="#D4855C"/>
+        <rect x="11" y="48" width="30" height="6" rx="3" fill="#B86040"/>
+        <rect x="13" y="48" width="26" height="4" rx="2" fill="#D4855C"/>
+        <!-- stem -->
+        <path d="M26 48 Q24 38 26 28" stroke="#5A9E4A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <!-- left leaf -->
+        <path d="M25 40 Q16 35 18 28 Q22 36 25 38 Z" fill="#6BBB58"/>
+        <!-- right leaf -->
+        <path d="M27 36 Q36 30 35 23 Q30 31 27 34 Z" fill="#5A9E4A"/>
+        <!-- petals — 6 around centre -->
+        <ellipse cx="26" cy="18" rx="5" ry="8" fill="#F472B6" transform="rotate(0 26 26)"/>
+        <ellipse cx="26" cy="18" rx="5" ry="8" fill="#F9A8D4" transform="rotate(60 26 26)"/>
+        <ellipse cx="26" cy="18" rx="5" ry="8" fill="#F472B6" transform="rotate(120 26 26)"/>
+        <ellipse cx="26" cy="18" rx="5" ry="8" fill="#F9A8D4" transform="rotate(180 26 26)"/>
+        <ellipse cx="26" cy="18" rx="5" ry="8" fill="#F472B6" transform="rotate(240 26 26)"/>
+        <ellipse cx="26" cy="18" rx="5" ry="8" fill="#F9A8D4" transform="rotate(300 26 26)"/>
+        <!-- centre -->
+        <circle cx="26" cy="26" r="6" fill="#F0B429"/>
+        <circle cx="26" cy="26" r="3.5" fill="#FDE68A"/>
+        <circle cx="26" cy="26" r="1.5" fill="#D97706"/>
+      </svg>
+    </div>
+    <div class="book b7" data-book="4"><span class="book-spine">Nebula</span></div>
+    <div class="book b8" data-book="5"><span class="book-spine">Freezer Robot</span></div>
+    <!-- small upright filler books -->
+    <div class="book" style="background:#D4858A;width:22px;height:68px;pointer-events:none;opacity:0.55;"></div>
+    <div class="book" style="background:#E8B84B;width:18px;height:58px;pointer-events:none;opacity:0.55;"></div>
+    <div class="book" style="background:#4BAE8A;width:20px;height:72px;pointer-events:none;opacity:0.55;"></div>
+    <!-- snow globe -->
+    <div class="deco deco-globe">
+      <svg width="54" height="68" viewBox="0 0 54 68" fill="none">
+        <!-- base -->
+        <rect x="10" y="57" width="34" height="8" rx="4" fill="#B0C4DE"/>
+        <rect x="14" y="53" width="26" height="6" rx="3" fill="#C8D8E8"/>
+        <!-- glass dome -->
+        <circle cx="27" cy="33" r="22" fill="#E8F4FF" opacity="0.85"/>
+        <circle cx="27" cy="33" r="22" stroke="#B0C4DE" stroke-width="2" fill="none"/>
+        <!-- inside scene: tiny tree -->
+        <rect x="25" y="42" width="4" height="10" rx="1" fill="#8B6347"/>
+        <polygon points="27,20 20,38 34,38" fill="#4BAE8A"/>
+        <polygon points="27,26 21,40 33,40" fill="#5DBF9A"/>
+        <!-- snow dots -->
+        <circle cx="18" cy="28" r="2" fill="white" opacity="0.9"/>
+        <circle cx="34" cy="24" r="1.5" fill="white" opacity="0.8"/>
+        <circle cx="22" cy="22" r="1" fill="white" opacity="0.7"/>
+        <circle cx="36" cy="34" r="1.5" fill="white" opacity="0.85"/>
+        <circle cx="14" cy="38" r="1" fill="white" opacity="0.7"/>
+        <circle cx="38" cy="42" r="1" fill="white" opacity="0.6"/>
+        <!-- shine highlight -->
+        <ellipse cx="18" cy="20" rx="5" ry="3" fill="white" opacity="0.35" transform="rotate(-20 18 20)"/>
+      </svg>
+    </div>
+  </div>
+
+</div>
+
+<!-- OPEN BOOK OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="open-book" id="openBook">
+    <button class="close-x" id="closeBtn">✕</button>
+
+    <div class="page-left">
+      <button class="back-btn" id="backBtn">← Back to bookshelf</button>
+      <div class="pg-label" id="pgLabel">Project</div>
+      <h2 class="pg-title" id="pgTitle"></h2>
+      <p class="pg-desc" id="pgDesc"></p>
+      <div class="pg-tags" id="pgTags"></div>
+    </div>
+
+    <div class="page-right">
+      <div>
+        <div class="pg-number" id="pgNum">01</div>
+        <p class="pg-right-text" id="pgRight"></p>
+      </div>
+      <a class="pg-link" id="pgLink" href="#" target="_blank" rel="noopener">View project ↗</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const data = [
+    {
+      label: 'Data Project · 01',
+      num: '01',
+      title: 'Inventory Rebalancing Engine',
+      desc: 'SQL-first pipeline automating multi-warehouse stock balancing — eliminating manual triage and reducing overstock exposure at scale.',
+      right: 'Built to replace a process that took hours of manual work each week. The pipeline detects imbalances and flags them before they become write-offs.',
+      tags: ['SQL', 'Python', 'pandas'],
+      link: 'https://github.com/neet813/Inventory-SQL',
+      linkText: 'View on GitHub ↗'
+    },
+    {
+      label: 'Data Project · 02',
+      num: '02',
+      title: 'SmartOps Task Intelligence',
+      desc: 'Zero-leakage workflow orchestration with auto-scoring and email alerts — built to surface the work that matters before it falls through the cracks.',
+      right: 'Designed around a real operational gap where tasks were silently getting lost between teams. Auto-scoring means nothing slips.',
+      tags: ['Automation', 'G-Suite', 'Apps Script'],
+      link: 'https://github.com/neet813/SmartOps-Task-Platform',
+      linkText: 'View on GitHub ↗'
+    },
+    {
+      label: 'Data Project · 03',
+      num: '03',
+      title: 'Supply Chain Early Warning',
+      desc: 'Live risk intelligence monitoring shipping routes with daily automated reports — turning reactive fire-fighting into proactive decision making.',
+      right: 'Monitors live signals and sends daily briefings so teams can act before a disruption becomes a crisis.',
+      tags: ['GitHub Actions', 'Python', 'REST APIs'],
+      link: 'https://github.com/neet813/Supply-Chain-Early-Warning',
+      linkText: 'View on GitHub ↗'
+    },
+    {
+      label: 'Data Project · 04',
+      num: '04',
+      title: 'Ghost Delivery Analysis',
+      desc: 'Forensic analysis of 43k+ records to surface delivery impossibilities — catches phantom completions that slip past traditional QA checks.',
+      right: 'Found patterns in timestamps that were physically impossible. Flagged a systemic data quality issue hiding in plain sight across 43k records.',
+      tags: ['Python', 'Pandas', 'SQL'],
+      link: 'https://github.com/neet813/amazon-ghost-delivery-analysis',
+      linkText: 'View on GitHub ↗'
+    },
+    {
+      label: 'Creative · App',
+      num: '05',
+      title: 'Nebula',
+      desc: 'AI goal-tracking app with a cosmic theme. Nova, your AI companion, helps you break down goals and stay on track — freemium model, deployed and live.',
+      right: 'Built from scratch and shipped. The cosmic UI was intentional — goal tracking should feel expansive, not like another to-do list.',
+      tags: ['Groq', 'Supabase', 'Vercel'],
+      link: 'https://universe-goals.vercel.app',
+      linkText: 'Visit live site ↗'
+    },
+    {
+      label: 'Creative · Hardware',
+      num: '06',
+      title: 'Freezer Robot',
+      desc: 'ESP32 hardware fridge tracker with magnetic mount and OLED display. Offline-first, no cloud dependency. Hit #2 on r/ESPHome.',
+      right: 'A physical product — soldered, mounted, deployed. Offline-first was a deliberate constraint. No wifi needed, no cloud dependency, no failure point.',
+      tags: ['ESP32', 'ESPHome', 'Hardware', 'Offline-first'],
+      link: 'https://github.com/neet813/freezer-robot',
+      linkText: 'View on GitHub ↗'
+    },
+  ];
+
+  // random lean angles on load
+  const leans = [-4, 2, -2, 3, -3, 1, -5, 2];
+  document.querySelectorAll('.book').forEach((b, i) => {
+    const angle = leans[i % leans.length];
+    b.style.transform = `rotate(${angle}deg)`;
+    b.dataset.lean = angle;
+  });
+
+  // hover: override lean, restore on leave
+  document.querySelectorAll('.book[data-book]').forEach(b => {
+    b.addEventListener('mouseenter', () => {
+      b.style.transform = 'translateY(-16px) rotate(0deg)';
+    });
+    b.addEventListener('mouseleave', () => {
+      b.style.transform = `rotate(${b.dataset.lean}deg)`;
+    });
+  });
+
+  // open book
+  function openBook(idx) {
+    const d = data[idx];
+    document.getElementById('pgLabel').textContent = d.label;
+    document.getElementById('pgNum').textContent   = d.num;
+    document.getElementById('pgTitle').textContent = d.title;
+    document.getElementById('pgDesc').textContent  = d.desc;
+    document.getElementById('pgRight').textContent = d.right;
+    document.getElementById('pgLink').href         = d.link;
+    document.getElementById('pgLink').textContent  = d.linkText;
+    document.getElementById('pgTags').innerHTML    = d.tags.map(t => `<span class="pg-tag">${t}</span>`).join('');
+    const ov = document.getElementById('overlay');
+    ov.style.display = 'flex';
+    requestAnimationFrame(() => ov.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeBook() {
+    const ov = document.getElementById('overlay');
+    ov.classList.remove('open');
+    setTimeout(() => { ov.style.display = 'none'; }, 280);
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.book[data-book]').forEach(b => {
+    b.addEventListener('click', () => openBook(+b.dataset.book));
+  });
+  document.getElementById('closeBtn').addEventListener('click', closeBook);
+  document.getElementById('backBtn').addEventListener('click', closeBook);
+  document.getElementById('overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('overlay')) closeBook();
+  });
+</script>
+</body>
+</html>

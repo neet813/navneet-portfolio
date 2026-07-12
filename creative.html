@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navneet Kaur — Creative Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F2EC;
+      --cream-dark: #EDE9E1;
+      --mint: #A8D8C8;
+      --mint-light: #D4EDE6;
+      --lilac: #C9B8E8;
+      --lilac-light: #E5DCF5;
+      --text-dark: #1A1A1A;
+      --text-mid: #444;
+      --text-light: #777;
+      --card-bg: #FEFCF8;
+      --border: #E5E0D6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--text-dark);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(26, 26, 26, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-bottom-color: rgba(245,242,236,0.12); }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.65);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 100px;
+      position: relative;
+      transition: color 0.25s, background 0.25s, box-shadow 0.25s;
+    }
+    .nav-links a:hover {
+      color: #fff;
+      background: #7B5EA7;
+      box-shadow: 0 4px 18px rgba(123,94,167,0.35);
+    }
+    .nav-links a:active,
+    .nav-links a.active {
+      color: #fff;
+      background: #5E3F8F;
+      box-shadow: 0 4px 18px rgba(94,63,143,0.4);
+    }
+
+    .nav-cta {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #fff;
+      text-decoration: none;
+      background: #5E3F8F;
+      padding: 10px 22px;
+      border-radius: 100px;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 4px 20px rgba(94,63,143,0.4);
+    }
+    .nav-cta::after {
+      content: ' ↗';
+      font-size: 12px;
+    }
+    .nav-cta:hover {
+      background: #7B5EA7;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(94,63,143,0.55);
+    }
+
+    .mode-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.75);
+      text-decoration: none;
+      padding: 9px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(245,242,236,0.18);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .mode-toggle:hover {
+      color: #fff;
+      background: rgba(245,242,236,0.08);
+      border-color: rgba(245,242,236,0.35);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--cream);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 65px; left: 0; right: 0;
+      background: var(--text-dark);
+      border-bottom: 1px solid rgba(245,242,236,0.12);
+      padding: 24px 32px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.7);
+      text-decoration: none;
+    }
+    .mobile-menu .nav-cta { align-self: flex-start; margin-top: 8px; color: var(--cream); }
+
+    /* ─── HERO (CREATIVE) ─── */
+    .hero-creative {
+      min-height: 100vh;
+      padding-top: 80px;
+      display: grid;
+      grid-template-columns: 48px 1fr 1fr;
+      gap: 0 40px;
+      padding-right: 48px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-creative::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -120px;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(155,127,199,0.22) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-creative::after {
+      content: '';
+      position: absolute;
+      bottom: 60px; left: 60px;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(99,196,163,0.16) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-rotated {
+      grid-column: 1;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.32);
+      white-space: nowrap;
+      align-self: center;
+      margin-left: 20px;
+    }
+
+    .hero-creative-left {
+      grid-column: 2;
+      padding-left: 8px;
+      position: relative;
+    }
+
+    .hero-creative-eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(155,127,199,0.85);
+      margin-bottom: 14px;
+    }
+
+    .hero-creative-hello {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(64px, 8.5vw, 116px);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--cream);
+      margin-bottom: 6px;
+    }
+
+    .hero-creative-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--cream) 55%, #9B7FC7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-creative-tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(14px, 1.4vw, 16px);
+      font-weight: 300;
+      color: rgba(245,242,236,0.6);
+      max-width: 420px;
+      letter-spacing: 0.01em;
+      line-height: 1.55;
+      margin-bottom: 40px;
+    }
+
+    .hero-creative-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 32px;
+      max-width: 340px;
+    }
+    .hero-stat-block { display: flex; flex-direction: column; gap: 4px; }
+    .hero-stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--cream);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(245,242,236,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-creative-right {
+      grid-column: 3;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-photo-blob {
+      position: absolute;
+      width: 440px; height: 440px;
+      background: linear-gradient(135deg, rgba(155,127,199,0.4), rgba(99,196,163,0.28));
+      border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%;
+      filter: blur(34px);
+      animation: blobMorph 8s ease-in-out infinite;
+    }
+    @keyframes blobMorph {
+      0%, 100% { border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%; }
+      33%       { border-radius: 45% 55% 40% 60% / 55% 45% 55% 45%; }
+      66%       { border-radius: 55% 45% 60% 40% / 45% 55% 45% 55%; }
+    }
+
+    .hero-photo-duo {
+      position: relative;
+      width: 420px;
+      aspect-ratio: 976 / 755;
+      cursor: none;
+    }
+    .hero-photo-duo img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      object-position: bottom;
+      display: block;
+    }
+    /* base layer: always blurred, no mask/transform on this element so the
+       filter composites reliably. The photo is a real transparent-PNG
+       cutout, so the blur itself fades naturally into the page background
+       at the silhouette edges — no card, no box, no vignette needed. */
+    .hero-photo-blurred {
+      z-index: 1;
+      filter: blur(70px) saturate(0.85);
+    }
+    /* tiny sharp "porthole" clipped to a circle that follows the cursor,
+       roughly the size of a mouse pointer */
+    .hero-photo-sharp {
+      z-index: 2;
+      clip-path: circle(18px at var(--mx, -400px) var(--my, -400px));
+    }
+    .hero-reveal-dot {
+      position: absolute;
+      z-index: 4;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(245,242,236,0.85);
+      transform: translate(-50%, -50%);
+      left: var(--mx, -400px);
+      top: var(--my, -400px);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .hero-photo-duo:hover .hero-reveal-dot { opacity: 1; }
+
+    /* ─── SECTION COMMON ─── */
+    section {
+      padding: 100px 96px;
+      position: relative;
+    }
+    section:not(.hero-creative)::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: min(900px, 78%);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(245,242,236,0.16) 50%, transparent);
+    }
+
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.45);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 56px;
+    }
+
+    /* ─── EXPERIENCE · BOARDING PASS ─── */
+    #experience { background: transparent; }
+
+    .exp-layout {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 0 70px;
+    }
+
+    /* flight route as full-section background */
+    .exp-route {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .exp-route-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .exp-route-path {
+      fill: none;
+      stroke: rgba(201,184,232,0.55);
+      stroke-width: 2;
+      stroke-dasharray: 6 7;
+      stroke-linecap: round;
+    }
+    .exp-route-dot {
+      fill: rgba(201,184,232,0.6);
+    }
+    .exp-route-plane {
+      position: absolute; top: 8px; left: 2%;
+      width: 30px; height: 30px;
+      color: var(--cream);
+      transform: rotate(48deg);
+    }
+    .exp-route-pin {
+      position: absolute; right: 2%; bottom: 6px;
+      width: 26px; height: 26px;
+      color: var(--cream);
+    }
+    .exp-route-label {
+      position: absolute;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.5);
+      white-space: nowrap;
+    }
+
+    .exp-grid {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .exp-card {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: visible;
+    }
+    .exp-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 56px rgba(0,0,0,0.09);
+    }
+
+    .exp-stub-main {
+      padding: 32px 34px;
+    }
+    .exp-stub-side {
+      padding: 32px 26px;
+      background: #1A1A1A;
+      color: #fff;
+      border-radius: 0 18px 18px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* perforated divider */
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      top: 14px; bottom: 14px;
+      right: 200px;
+      width: 0;
+      border-left: 2px dashed rgba(150,140,130,0.45);
+    }
+    .exp-notch {
+      position: absolute;
+      right: 191px;
+      width: 18px; height: 18px;
+      background: var(--text-dark);
+      border-radius: 50%;
+      z-index: 3;
+    }
+    .exp-notch.top { top: -9px; }
+    .exp-notch.bottom { bottom: -9px; }
+
+    .exp-flight-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .exp-boarding-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+    .exp-plane-icon { width: 16px; height: 16px; color: #C9B8E8; }
+
+    .exp-company {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .exp-role {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-mid);
+      margin-bottom: 8px;
+    }
+
+    .exp-dates {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      background: var(--cream-dark);
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .exp-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 20px;
+    }
+
+    .exp-side-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 3px;
+    }
+    .exp-side-company {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .exp-side-role {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .exp-side-dates {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: #C9B8E8;
+      letter-spacing: 0.02em;
+    }
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .exp-bullets li {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.55;
+      padding-left: 16px;
+      position: relative;
+    }
+    .exp-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--mint), var(--lilac));
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--text-dark);
+      color: var(--cream);
+    }
+    #contact .section-label { color: rgba(245,242,236,0.4); }
+
+    .contact-centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* about pie chart — 480x480 outer box gives the orbiting labels
+       guaranteed room so they never spill into the heading/paragraph
+       above and below; the ring+photo stay centered inside it. */
+    .about-pie {
+      position: relative;
+      width: 480px;
+      height: 480px;
+      margin: 20px 0;
+    }
+    .about-pie-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: conic-gradient(#9B7FC7 0% 16.67%, #5FB4FF 16.67% 33.33%, #63C4A3 33.33% 50%, #E8956B 50% 66.67%, #E87BAE 66.67% 83.33%, #E8C15F 83.33% 100%);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+    }
+    .about-pie-photo {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 190px; height: 190px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 7px solid var(--text-dark);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .about-pie-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: 50% 18%;
+      display: block;
+    }
+    .about-pie-label {
+      position: absolute;
+      width: 165px;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--cream);
+      line-height: 1.3;
+      pointer-events: none;
+    }
+    .about-pie-label .pct {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .about-pie-label .lbl {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.01em;
+      color: rgba(245,242,236,0.55);
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+    /* positions = ring center (50%,50%) + R=190px at each segment's midpoint angle (6 segments, 60° apart) */
+    .about-pie-label.seg-1 { left: calc(50% + 95px);  top: calc(50% - 165px); transform: translateY(-50%);          text-align: left;  }
+    .about-pie-label.seg-2 { left: calc(50% + 190px); top: 50%;               transform: translateY(-50%);          text-align: left;  }
+    .about-pie-label.seg-3 { left: calc(50% + 95px);  top: calc(50% + 165px); transform: translateY(-50%);          text-align: left;  }
+    .about-pie-label.seg-4 { left: calc(50% - 95px);  top: calc(50% + 165px); transform: translate(-100%, -50%);    text-align: right; }
+    .about-pie-label.seg-5 { left: calc(50% - 190px); top: 50%;               transform: translate(-100%, -50%);    text-align: right; }
+    .about-pie-label.seg-6 { left: calc(50% - 95px);  top: calc(50% - 165px); transform: translate(-100%, -50%);    text-align: right; }
+
+    /* text side */
+    .contact-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(42px, 5vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--cream) 40%, var(--lilac) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(245,242,236,0.65);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .available-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--mint);
+      background: rgba(168,216,200,0.12);
+      border: 1px solid rgba(168,216,200,0.3);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 36px;
+    }
+    .available-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--mint);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--cream);
+      text-decoration: none;
+      border: 1px solid rgba(245,242,236,0.2);
+      padding: 12px 22px;
+      border-radius: 100px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .contact-link:hover {
+      background: rgba(245,242,236,0.08);
+      border-color: rgba(245,242,236,0.45);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--text-dark);
+      border-top: 1px solid rgba(245,242,236,0.08);
+      padding: 24px 96px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer p {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(245,242,236,0.35);
+    }
+    .footer-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(245,242,236,0.4);
+    }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      nav { padding: 18px 32px; }
+      section { padding: 80px 48px; }
+      footer { padding: 20px 48px; }
+      #hero { padding-right: 32px; gap: 0 24px; }
+      .products-grid, .projects-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .exp-layout { padding: 0; }
+      .exp-route { display: none; }
+      .exp-card { grid-template-columns: 1fr; border-radius: 18px; }
+      .exp-stub-side { border-radius: 0 0 18px 18px; }
+      .exp-card::before { display: none; }
+      .exp-notch { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links, .nav-cta, .mode-toggle { display: none; }
+      .hamburger { display: flex; }
+
+      section { padding: 56px 20px; }
+      footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+
+      /* hero */
+      .hero-creative {
+        grid-template-columns: 1fr;
+        padding: 90px 20px 48px;
+        min-height: auto;
+      }
+      .hero-rotated { display: none; }
+      .hero-creative-left { grid-column: 1; text-align: center; }
+      .hero-creative-tagline { margin-left: auto; margin-right: auto; }
+      .hero-creative-stats { margin: 0 auto; text-align: left; }
+      .hero-creative-right { grid-column: 1; margin-top: 32px; order: -1; }
+      .hero-photo-blob { width: 280px; height: 280px; }
+      .hero-photo-duo { width: 300px; }
+      .exp-card { padding: 24px; }
+
+      /* products */
+      .product-img-wrap { height: 260px; }
+
+      /* contact */
+      .about-pie, .about-pie-ring { width: 220px; height: 220px; }
+      .about-pie-photo { width: 138px; height: 138px; border-width: 5px; }
+      .about-pie-label { display: none; }
+      .contact-links { flex-direction: column; }
+      .contact-link { justify-content: center; }
+    }
+
+    @media (max-width: 375px) {
+      .hero-creative-hello { font-size: 52px; }
+      .hero-creative-name { font-size: 24px; }
+      section { padding: 48px 16px; }
+    }
+  /* ── BOOKSHELF SECTION ── */
+  #bookshelf { display:flex; flex-direction:column; align-items:center; }
+  .bs2-wrap { width:100%; max-width:540px; margin:44px auto 0; }
+  .bs-flex-wrap { display:flex; align-items:stretch; gap:14px; }
+  .bs-legend { position:relative; flex:0 0 84px; }
+  .bs-legend-tag {
+    position: absolute;
+    right: 0;
+    width: 84px;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFF6E9;
+    padding: 9px 6px;
+    border-radius: 6px;
+    background: linear-gradient(155deg, #C4874A 0%, #A86C38 55%, #8B5A2B 100%);
+    border: 1px solid rgba(70,42,16,0.55);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.2);
+    text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  }
+  .bs-legend-tag.projects { top: 8%; }
+  .bs-legend-tag.creative { bottom: 28%; }
+  .bs-stage { position:relative; flex: 1 1 auto; min-width:0; aspect-ratio:505/900; }
+  .bs-case  { position:absolute; inset:0; width:100%; height:100%; z-index:1; }
+  .bs-item  { position:absolute; width:auto; z-index:2; }
+  .bs-bob   { animation:bsFloatA 4.5s ease-in-out infinite; }
+  .bs-bob2  { animation:bsFloatA 5.5s ease-in-out infinite; }
+  .bs-bob3  { animation:bsFloatA 6.5s ease-in-out infinite; }
+  .bs-badge {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #FFF6E9;
+    padding: 9px 22px;
+    border-radius: 6px;
+    background: linear-gradient(155deg, #C4874A 0%, #A86C38 55%, #8B5A2B 100%);
+    border: 1px solid rgba(70,42,16,0.55);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.2);
+    white-space: nowrap;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  }
+  .bs-badge.projects::before {
+    content: '';
+    position: absolute;
+    top: -3px; left: 50%;
+    width: 5px; height: 5px;
+    transform: translateX(-50%);
+    background: #5C3A1A;
+    border-radius: 50%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.4);
+  }
+  .bs-badge.creative { transform: translateX(-50%) rotate(-1.5deg); }
+  .bs-badge.creative::after {
+    content: '';
+    position: absolute;
+    bottom: -34px; left: 50%;
+    width: 4px; height: 34px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, #8B5A2B, #5C3A1A);
+    border-radius: 2px;
+    box-shadow: 1px 0 2px rgba(0,0,0,0.2);
+  }
+  @keyframes bsFloatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  @keyframes bsFloatB { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-4px) rotate(1deg)} }
+  @keyframes bsFloatC { 0%,100%{transform:translateY(0) rotate(1deg)} 50%{transform:translateY(-6px) rotate(-1deg)} }
+  @keyframes bsFlicker { 0%,100%{transform:scaleX(1) rotate(-2deg);opacity:1} 30%{transform:scaleX(0.8) rotate(3deg);opacity:0.85} 60%{transform:scaleX(1.1) rotate(-1deg);opacity:0.95} }
+  .bs2-book { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s ease; cursor: pointer; }
+  .bs2-book:hover { transform: translateY(-9px) scale(1.04); z-index:6; filter: drop-shadow(0 10px 14px rgba(0,0,0,0.28)); }
+  .bs-flame { transform-origin: 50% 100%; animation: bsFlicker 1.6s ease-in-out infinite; }
+
+  /* open-book overlay */
+  .bs-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20,14,10,0.65);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+  }
+  .bs-overlay.open { display: flex; animation: bsFadeIn 0.25s ease forwards; }
+  @keyframes bsFadeIn { to { opacity: 1; } }
+  .bs-open-book {
+    background: #FEFCF8;
+    width: 100%; max-width: 680px; max-height: 88vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-radius: 4px 18px 18px 4px;
+    box-shadow: 0 48px 120px rgba(0,0,0,0.45);
+    position: relative; overflow: hidden;
+    animation: bsBookOpen 0.4s cubic-bezier(0.34,1.4,0.64,1) forwards;
+    transform-origin: left center;
+  }
+  @keyframes bsBookOpen {
+    from { opacity:0; transform: perspective(800px) rotateY(-20deg) scale(0.92); }
+    to   { opacity:1; transform: perspective(800px) rotateY(0deg) scale(1); }
+  }
+  .bs-open-book::before {
+    content:''; position:absolute; left:50%; top:0; bottom:0; width:4px;
+    background: linear-gradient(to right,rgba(0,0,0,0.1),rgba(0,0,0,0.03),rgba(0,0,0,0.08));
+    transform: translateX(-50%); z-index: 5;
+  }
+  .bs-page-left  { padding:36px 32px 36px 36px; background:#FEFCF8; overflow-y:auto; position:relative; }
+  .bs-page-right { padding:36px 36px 36px 32px; background:#FBF8F2; display:flex; flex-direction:column; justify-content:space-between; overflow-y:auto; }
+  .bs-back-btn {
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase; color:#aaa;
+    cursor:pointer; border:none; background:none; padding:0; margin-bottom:28px; transition:color 0.2s;
+  }
+  .bs-back-btn:hover { color:#555; }
+  .bs-pg-label { font-family:'Space Grotesk',sans-serif; font-size:9px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:#ccc; margin-bottom:10px; }
+  .bs-pg-title { font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700; letter-spacing:-0.02em; color:#1A1A1A; line-height:1.2; margin-bottom:14px; }
+  .bs-pg-desc  { font-family:'Inter',sans-serif; font-size:13.5px; font-weight:300; color:#555; line-height:1.72; margin-bottom:20px; }
+  .bs-pg-tags  { display:flex; flex-wrap:wrap; gap:7px; }
+  .bs-pg-tag   { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; color:#777; background:#EDE9E1; border-radius:100px; padding:4px 11px; letter-spacing:0.04em; }
+  .bs-pg-num   { font-family:'Space Grotesk',sans-serif; font-size:64px; font-weight:700; color:#EDE9E1; letter-spacing:-0.06em; line-height:1; margin-bottom:16px; }
+  .bs-pg-right-text { font-family:'Inter',sans-serif; font-size:13px; font-weight:300; color:#888; line-height:1.68; flex:1; margin-bottom:28px; }
+  .bs-pg-link {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700;
+    color:#fff; background:#1A1A1A; text-decoration:none;
+    padding:11px 22px; border-radius:100px;
+    transition:background 0.22s, transform 0.22s; align-self:flex-start;
+  }
+  .bs-pg-link:hover { background:#7B5EA7; transform:translateY(-2px); }
+  .bs-close-x {
+    position:absolute; top:14px; right:14px; width:30px; height:30px;
+    border-radius:50%; background:rgba(0,0,0,0.06); border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:#888; z-index:20; transition:background 0.2s, color 0.2s;
+  }
+  .bs-close-x:hover { background:rgba(0,0,0,0.13); color:#333; }
+  @media (max-width:580px) {
+    .bs-open-book { grid-template-columns:1fr; border-radius:12px; }
+    .bs-open-book::before { display:none; }
+    .bs-page-right { border-top:1px solid #EDE9E1; }
+    .bs-pg-num { font-size:44px; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">NK</a>
+  <ul class="nav-links">
+    <li><a href="#hero">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#bookshelf">Library</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="index.html" class="mode-toggle" title="Switch to Simple portfolio">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>
+    Simple
+  </a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#hero" onclick="closeMobile()">About</a>
+  <a href="#experience" onclick="closeMobile()">Experience</a>
+  <a href="#bookshelf" onclick="closeMobile()">Library</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="index.html" class="nav-cta" onclick="closeMobile()">Switch to Simple</a>
+</div>
+
+<!-- HERO -->
+<section id="hero" class="hero-creative">
+  <div class="hero-rotated">Turning operational data into systems that run themselves</div>
+
+  <div class="hero-creative-left">
+    <p class="hero-creative-eyebrow fade-up">Data Analyst · Product Builder</p>
+    <h1 class="hero-creative-hello fade-up">Hello,</h1>
+    <h2 class="hero-creative-name fade-up">I'm Navneet Kaur</h2>
+    <p class="hero-creative-tagline fade-up">Turning operational data into systems that run themselves.</p>
+    <div class="hero-creative-stats fade-up">
+      <div class="hero-stat-block">
+        <span class="hero-stat-num">2</span>
+        <span class="hero-stat-label">Products shipped</span>
+      </div>
+      <div class="hero-stat-block">
+        <span class="hero-stat-num">43k+</span>
+        <span class="hero-stat-label">Records analysed</span>
+      </div>
+      <div class="hero-stat-block">
+        <span class="hero-stat-num">#2</span>
+        <span class="hero-stat-label">on r/ESPHome</span>
+      </div>
+      <div class="hero-stat-block">
+        <span class="hero-stat-num">1</span>
+        <span class="hero-stat-label">Hardware product shipped</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-creative-right">
+    <div class="hero-photo-blob"></div>
+    <div class="hero-photo-duo fade-up" id="heroPhotoDuo">
+      <img class="hero-photo-sharp" src="assets/hero-photo.png" alt="Navneet Kaur" />
+      <img class="hero-photo-blurred" src="assets/hero-photo.png" alt="" />
+      <div class="hero-reveal-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label fade-up">Experience</p>
+  <h2 class="section-title fade-up">Where I've worked</h2>
+
+  <div class="exp-layout">
+    <div class="exp-route">
+      <svg class="exp-route-svg" viewBox="0 0 900 800" preserveAspectRatio="none">
+        <path class="exp-route-path" d="M50,40 C250,10 700,60 830,140 C920,200 60,260 40,400 C25,520 840,480 850,620 C855,700 500,740 420,760"/>
+        <circle class="exp-route-dot" cx="500" cy="33" r="4"/>
+        <circle class="exp-route-dot" cx="855" cy="155" r="4"/>
+        <circle class="exp-route-dot" cx="42" cy="390" r="4"/>
+        <circle class="exp-route-dot" cx="848" cy="600" r="4"/>
+      </svg>
+      <svg class="exp-route-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-1 .1-1.3.5l-.4.4c-.4.4-.3 1 .2 1.3L9 12l-2 3H3l-1 1 3 2 2 3 1-1v-4l3-2 3.5 5.3c.3.5.9.6 1.3.2l.4-.4c.4-.3.6-.8.5-1.3z"/></svg>
+      <span class="exp-route-label" style="left:6%; top:2px;">Previously · Wickes UK</span>
+      <svg class="exp-route-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.58 7-13a7 7 0 1 0-14 0c0 5.42 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      <span class="exp-route-label" style="right:2%; bottom:-14px;">Now · Numerator</span>
+    </div>
+
+    <div class="exp-grid">
+      <div class="exp-card fade-up">
+        <div class="exp-stub-main">
+          <div class="exp-flight-top">
+            <span class="exp-boarding-label">Boarding Pass</span>
+            <svg class="exp-plane-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-1 .1-1.3.5l-.4.4c-.4.4-.3 1 .2 1.3L9 12l-2 3H3l-1 1 3 2 2 3 1-1v-4l3-2 3.5 5.3c.3.5.9.6 1.3.2l.4-.4c.4-.3.6-.8.5-1.3z"/></svg>
+          </div>
+          <ul class="exp-bullets">
+            <li>Delivering daily sales and retailer market share reports ahead of deadline for UK grocery clients across dairy and produce categories.</li>
+            <li>Running full brand studies — what to sell, where, to whom — giving clients fast, clear answers on commercial decisions.</li>
+            <li>Independently diagnosed and fixed broken Excel dashboards and Worldpanel reports; always validated fixes with the manager before redelivery.</li>
+          </ul>
+        </div>
+        <div class="exp-notch top"></div>
+        <div class="exp-notch bottom"></div>
+        <div class="exp-stub-side">
+          <span class="exp-side-label">Employer</span>
+          <div class="exp-side-company">Numerator</div>
+          <span class="exp-side-label">Role</span>
+          <p class="exp-side-role">Client Analyst · Worldpanel Division</p>
+          <span class="exp-side-label">Dates</span>
+          <span class="exp-side-dates">April 2026 – Present</span>
+        </div>
+      </div>
+
+      <div class="exp-card fade-up">
+        <div class="exp-stub-main">
+          <div class="exp-flight-top">
+            <span class="exp-boarding-label">Boarding Pass</span>
+            <svg class="exp-plane-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-1 .1-1.3.5l-.4.4c-.4.4-.3 1 .2 1.3L9 12l-2 3H3l-1 1 3 2 2 3 1-1v-4l3-2 3.5 5.3c.3.5.9.6 1.3.2l.4-.4c.4-.3.6-.8.5-1.3z"/></svg>
+          </div>
+          <ul class="exp-bullets">
+            <li>Built automated reporting pipelines, reducing turnaround from days to seconds.</li>
+            <li>Identified £340k+ of reducible overstock risk using SQL analysis.</li>
+            <li>Maintained Looker Studio and Power BI dashboards for operational teams.</li>
+            <li>Automated workflows with Google Apps Script across supply chain ops.</li>
+          </ul>
+        </div>
+        <div class="exp-notch top"></div>
+        <div class="exp-notch bottom"></div>
+        <div class="exp-stub-side">
+          <span class="exp-side-label">Employer</span>
+          <div class="exp-side-company">Wickes UK</div>
+          <span class="exp-side-label">Role</span>
+          <p class="exp-side-role">Data &amp; Reporting Analyst</p>
+          <span class="exp-side-label">Dates</span>
+          <span class="exp-side-dates">Jun 2025 – Jan 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKSHELF -->
+<section id="bookshelf">
+  <p class="section-label fade-up">Everything I've Built</p>
+  <h2 class="section-title fade-up">My bookshelf</h2>
+
+  <div class="bs2-wrap fade-up">
+  <div class="bs-flex-wrap">
+  <div class="bs-legend">
+    <span class="bs-legend-tag projects">Projects</span>
+    <span class="bs-legend-tag creative">Creative</span>
+  </div>
+  <div class="bs-stage">
+    <img class="bs-case" src="assets/bookshelf/bookcase.png" alt="Bookshelf">
+
+    <!-- TOP SHELF · 3 project books + framed photo -->
+    <img class="bs-item bs2-book" data-bs-book="0" src="assets/bookshelf/sp_inventory.png" style="height:14%; left:8%;  bottom:78.5%" alt="Inventory Rebalancing Engine">
+    <img class="bs-item bs2-book" data-bs-book="1" src="assets/bookshelf/sp_smartops.png"  style="height:14%; left:19%; bottom:78.5%" alt="SmartOps Task Intelligence">
+    <img class="bs-item bs2-book" data-bs-book="2" src="assets/bookshelf/sp_supply.png"    style="height:14%; left:30%; bottom:78.5%" alt="Supply Chain Early Warning">
+    <img class="bs-item" src="assets/bookshelf/frame_photo.png" style="height:20%; left:60%; bottom:78.5%" alt="Navneet Kaur">
+
+    <!-- MIDDLE SHELF · 1 project book + decor -->
+    <img class="bs-item bs2-book" data-bs-book="3" src="assets/bookshelf/sp_journal.png" style="height:27%; left:8%; bottom:46.5%" alt="Ghost Delivery Analysis">
+    <img class="bs-item" src="assets/bookshelf/candle.png" style="height:19%; left:44%; bottom:46.5%">
+    <img class="bs-item" src="assets/bookshelf/vase_flowers.png" style="height:30%; left:60%; bottom:46.5%">
+
+    <!-- BOTTOM SHELF · 2 project books + decor -->
+    <img class="bs-item bs2-book" data-bs-book="4" src="assets/bookshelf/sp_nobola.png"   style="height:18%; left:9%;  bottom:24.5%" alt="Nebula">
+    <img class="bs-item bs2-book" data-bs-book="5" src="assets/bookshelf/sp_notebook.png" style="height:18%; left:18%; bottom:24.5%" alt="Freezer Robot">
+    <img class="bs-item bs-bob2" src="assets/bookshelf/succulent.png" style="height:16%; left:40%; bottom:24.5%">
+    <img class="bs-item bs-bob3" src="assets/bookshelf/globe.png" style="height:19%; left:70%; bottom:24.5%">
+  </div>
+  </div>
+
+  </div>
+</section>
+
+<!-- BOOKSHELF OVERLAY -->
+<div class="bs-overlay" id="bsOverlay">
+  <div class="bs-open-book" id="bsOpenBook">
+    <button class="bs-close-x" id="bsCloseBtn">✕</button>
+    <div class="bs-page-left">
+      <button class="bs-back-btn" id="bsBackBtn">← Back to bookshelf</button>
+      <div class="bs-pg-label" id="bsPgLabel"></div>
+      <h2 class="bs-pg-title" id="bsPgTitle"></h2>
+      <p class="bs-pg-desc" id="bsPgDesc"></p>
+      <div class="bs-pg-tags" id="bsPgTags"></div>
+    </div>
+    <div class="bs-page-right">
+      <div>
+        <div class="bs-pg-num" id="bsPgNum">01</div>
+        <p class="bs-pg-right-text" id="bsPgRight"></p>
+      </div>
+      <a class="bs-pg-link" id="bsPgLink" href="#" target="_blank" rel="noopener">View project ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-centered">
+    <p class="section-label fade-up">Contact</p>
+    <h2 class="contact-title fade-up">Let's talk.</h2>
+
+    <div class="about-pie fade-up">
+      <div class="about-pie-ring"></div>
+      <div class="about-pie-photo">
+        <img src="assets/donut-photo.jpg" alt="Navneet Kaur" />
+      </div>
+      <span class="about-pie-label seg-1"><span class="pct">Deep focus</span><span class="lbl">Hours at the laptop, just to execute the idea</span></span>
+      <span class="about-pie-label seg-2"><span class="pct">Selective extrovert</span><span class="lbl">Only once you know me</span></span>
+      <span class="about-pie-label seg-3"><span class="pct">Goal-obsessed</span><span class="lbl">Passionate about seeing it through</span></span>
+      <span class="about-pie-label seg-4"><span class="pct">Always asks why</span><span class="lbl">I question everything</span></span>
+      <span class="about-pie-label seg-5"><span class="pct">Lifelong learner</span><span class="lbl">Always eager to learn something new</span></span>
+      <span class="about-pie-label seg-6"><span class="pct">Product thinker</span><span class="lbl">Thinks beyond just the build</span></span>
+    </div>
+
+    <p class="contact-sub fade-up">Looking for Data Analyst roles in the Netherlands. Based in India · Open to relocation · Visa sponsorship required.</p>
+    <div class="available-badge fade-up">
+      <span class="available-dot"></span>
+      Available now
+    </div>
+    <div class="contact-links fade-up">
+      <a href="https://linkedin.com/in/navneet-kaur-analyst" target="_blank" rel="noopener" class="contact-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/neet813" target="_blank" rel="noopener" class="contact-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:navneetkr1908@gmail.com" class="contact-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Email
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Navneet Kaur. All rights reserved.</p>
+  <span class="footer-name">neet813.github.io/navneet-portfolio</span>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // ── HERO PHOTO REVEAL ──
+  const heroPhotoDuo = document.getElementById('heroPhotoDuo');
+  function setRevealPos(clientX, clientY) {
+    const rect = heroPhotoDuo.getBoundingClientRect();
+    heroPhotoDuo.style.setProperty('--mx', (clientX - rect.left) + 'px');
+    heroPhotoDuo.style.setProperty('--my', (clientY - rect.top) + 'px');
+  }
+  heroPhotoDuo.addEventListener('mousemove', e => setRevealPos(e.clientX, e.clientY));
+  heroPhotoDuo.addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    if (t) setRevealPos(t.clientX, t.clientY);
+  }, { passive: true });
+  heroPhotoDuo.addEventListener('mouseleave', () => {
+    heroPhotoDuo.style.removeProperty('--mx');
+    heroPhotoDuo.style.removeProperty('--my');
+  });
+  heroPhotoDuo.addEventListener('touchend', () => {
+    heroPhotoDuo.style.removeProperty('--mx');
+    heroPhotoDuo.style.removeProperty('--my');
+  });
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+
+  // Active nav on scroll
+  const sections = [
+    { id: 'hero',       href: '#hero' },
+    { id: 'experience', href: '#experience' },
+    { id: 'bookshelf',  href: '#bookshelf' },
+    { id: 'contact',    href: '#contact' },
+  ];
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const s = sections.find(s => s.id === entry.target.id);
+        const match = s ? document.querySelector(`.nav-links a[href="${s.href}"]`) : null;
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el) sectionObserver.observe(el);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ── BOOKSHELF ──
+  const bsData = [
+    { label:'Data Project · 01', num:'01', title:'Inventory Rebalancing Engine', desc:'SQL-first pipeline automating multi-warehouse stock balancing — eliminating manual triage and reducing overstock exposure at scale.', right:'Built to replace a process that took hours of manual work each week. The pipeline detects imbalances and flags them before they become write-offs.', tags:['SQL','Python','pandas'], link:'https://github.com/neet813/Inventory-SQL', linkText:'View on GitHub ↗' },
+    { label:'Data Project · 02', num:'02', title:'SmartOps Task Intelligence', desc:'Zero-leakage workflow orchestration with auto-scoring and email alerts — built to surface the work that matters before it falls through the cracks.', right:'Designed around a real operational gap where tasks were silently getting lost between teams. Auto-scoring means nothing slips.', tags:['Automation','G-Suite','Apps Script'], link:'https://github.com/neet813/SmartOps-Task-Platform', linkText:'View on GitHub ↗' },
+    { label:'Data Project · 03', num:'03', title:'Supply Chain Early Warning', desc:'Live risk intelligence monitoring shipping routes with daily automated reports — turning reactive fire-fighting into proactive decision making.', right:'Monitors live signals and sends daily briefings so teams can act before a disruption becomes a crisis.', tags:['GitHub Actions','Python','REST APIs'], link:'https://github.com/neet813/Supply-Chain-Early-Warning', linkText:'View on GitHub ↗' },
+    { label:'Data Project · 04', num:'04', title:'Ghost Delivery Analysis', desc:'Forensic analysis of 43k+ records to surface delivery impossibilities — catches phantom completions that slip past traditional QA checks.', right:'Found patterns in timestamps that were physically impossible. Flagged a systemic data quality issue hiding in plain sight across 43k records.', tags:['Python','Pandas','SQL'], link:'https://github.com/neet813/amazon-ghost-delivery-analysis', linkText:'View on GitHub ↗' },
+    { label:'Creative · App', num:'05', title:'Nebula', desc:'AI goal-tracking app with a cosmic theme. Nova, your AI companion, helps you break down goals and stay on track — freemium model, deployed and live.', right:'Built from scratch and shipped. The cosmic UI was intentional — goal tracking should feel expansive, not like another to-do list.', tags:['Groq','Supabase','Vercel'], link:'https://universe-goals.vercel.app', linkText:'Visit live site ↗' },
+    { label:'Creative · Hardware', num:'06', title:'Freezer Robot', desc:'ESP32 hardware fridge tracker with magnetic mount and OLED display. Offline-first, no cloud dependency. Hit #2 on r/ESPHome.', right:'A physical product — soldered, mounted, deployed. Offline-first was a deliberate constraint. No wifi needed, no cloud dependency, no failure point.', tags:['ESP32','ESPHome','Hardware','Offline-first'], link:'https://github.com/neet813/freezer-robot', linkText:'View on GitHub ↗' },
+  ];
+
+  document.querySelectorAll('.bs2-book[data-bs-book]').forEach(b => {
+    b.addEventListener('click', () => bsOpenBook(+b.dataset.bsBook));
+  });
+
+  function bsOpenBook(idx) {
+    const d = bsData[idx];
+    document.getElementById('bsPgLabel').textContent = d.label;
+    document.getElementById('bsPgNum').textContent   = d.num;
+    document.getElementById('bsPgTitle').textContent = d.title;
+    document.getElementById('bsPgDesc').textContent  = d.desc;
+    document.getElementById('bsPgRight').textContent = d.right;
+    document.getElementById('bsPgLink').href         = d.link;
+    document.getElementById('bsPgLink').textContent  = d.linkText;
+    document.getElementById('bsPgTags').innerHTML    = d.tags.map(t=>`<span class="bs-pg-tag">${t}</span>`).join('');
+    const ov = document.getElementById('bsOverlay');
+    ov.style.display = 'flex';
+    requestAnimationFrame(() => ov.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+  }
+  function bsCloseBook() {
+    const ov = document.getElementById('bsOverlay');
+    ov.classList.remove('open');
+    setTimeout(() => { ov.style.display = 'none'; }, 280);
+    document.body.style.overflow = '';
+  }
+  document.getElementById('bsCloseBtn').addEventListener('click', bsCloseBook);
+  document.getElementById('bsBackBtn').addEventListener('click', bsCloseBook);
+  document.getElementById('bsOverlay').addEventListener('click', e => { if (e.target === document.getElementById('bsOverlay')) bsCloseBook(); });
+</script>
+</body>
+</html>
