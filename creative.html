@@ -334,6 +334,9 @@
       object-fit: contain;
       object-position: bottom;
       display: block;
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-touch-callout: none;
     }
     /* base layer: always blurred, no mask/transform on this element so the
        filter composites reliably. The photo is a real transparent-PNG
@@ -1077,8 +1080,8 @@
   <div class="hero-creative-right">
     <div class="hero-photo-blob"></div>
     <div class="hero-photo-duo fade-up" id="heroPhotoDuo">
-      <img class="hero-photo-sharp" src="assets/hero-photo.png" alt="Navneet Kaur" />
-      <img class="hero-photo-blurred" src="assets/hero-photo.png" alt="" />
+      <img class="hero-photo-sharp" src="assets/hero-photo.png" alt="Navneet Kaur" draggable="false" />
+      <img class="hero-photo-blurred" src="assets/hero-photo.png" alt="" draggable="false" />
       <div class="hero-reveal-dot"></div>
     </div>
   </div>
